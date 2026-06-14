@@ -1,0 +1,2586 @@
+/* ============================================================
+   Parts Village - Clients & Quotations Stylesheet
+   Professional Dark Theme
+   ============================================================ */
+
+/* ---------- CSS Variables ---------- */
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-surface: #1a1a1a;
+    --bg-surface-hover: #242424;
+    --bg-surface-elevated: #2a2a2a;
+    --bg-input: #111111;
+    --border-subtle: #2a2a2a;
+    --border-default: #3a3a3a;
+    --border-focus: #d4af37;
+    --gold: #d4af37;
+    --gold-light: #e8c94f;
+    --gold-dark: #b8932a;
+    --gold-muted: #8a7020;
+    --text-primary: #e0e0e0;
+    --text-secondary: #888888;
+    --text-muted: #555555;
+    --text-on-gold: #0a0a0a;
+    --success: #4caf50;
+    --success-bg: #1a3a1a;
+    --warning: #ff9800;
+    --warning-bg: #3a2a0a;
+    --danger: #f44336;
+    --danger-bg: #3a0a0a;
+    --info: #2196f3;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.5);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.7);
+    --transition: all 0.25s ease;
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: var(--gold);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--gold-light);
+}
+
+/* ---------- Header ---------- */
+.pv-header {
+    background: var(--bg-surface);
+    border-bottom: 2px solid var(--gold-muted);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.pv-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.pv-logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.pv-logo-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.pv-logo-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.pv-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.pv-back-link:hover {
+    color: var(--gold);
+    border-color: var(--gold-muted);
+    background: var(--bg-surface-hover);
+}
+
+/* ---------- Settings Button ---------- */
+.pv-settings-btn {
+    background: none;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pv-settings-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* ---------- Tab Navigation ---------- */
+.pv-tabs {
+    display: flex;
+    gap: 0;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 24px;
+    overflow-x: auto;
+}
+
+.pv-tab-btn {
+    padding: 14px 24px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: var(--transition);
+    white-space: nowrap;
+    position: relative;
+}
+
+.pv-tab-btn:hover {
+    color: var(--text-primary);
+}
+
+.pv-tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+}
+
+.pv-tab-badge {
+    background: var(--gold);
+    color: var(--text-on-gold);
+    font-size: 0.65rem;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-weight: 700;
+}
+
+/* ---------- Tab Content ---------- */
+.pv-tab-content {
+    display: none;
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeIn 0.3s ease;
+}
+
+.pv-tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Section Header ---------- */
+.pv-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pv-section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* ---------- Buttons ---------- */
+.pv-btn {
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pv-btn-gold {
+    background: var(--gold);
+    color: var(--text-on-gold);
+}
+
+.pv-btn-gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+}
+
+.pv-btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-default);
+    color: var(--text-primary);
+}
+
+.pv-btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.pv-btn-ghost {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 8px 12px;
+}
+
+.pv-btn-ghost:hover {
+    color: var(--text-primary);
+    background: var(--bg-surface-hover);
+}
+
+.pv-btn-danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+.pv-btn-danger:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+.pv-btn-success {
+    background: var(--success);
+    color: #fff;
+}
+
+.pv-btn-success:hover {
+    background: #45a049;
+}
+
+.pv-btn-sm {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+}
+
+.pv-btn-icon {
+    padding: 8px;
+    min-width: 36px;
+    height: 36px;
+}
+
+.pv-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ---------- Search & Filters ---------- */
+.pv-search-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.pv-search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 14px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.pv-search-input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.pv-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.pv-select {
+    padding: 10px 14px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    min-width: 160px;
+    cursor: pointer;
+}
+
+.pv-select:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+/* ---------- Client Cards Grid ---------- */
+.pv-clients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.pv-client-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.pv-client-card:hover {
+    border-color: var(--gold-muted);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.pv-client-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.pv-client-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gold-muted);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.pv-client-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.pv-client-card:hover .pv-client-actions {
+    opacity: 1;
+}
+
+.pv-action-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--bg-surface-elevated);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    font-size: 0.75rem;
+}
+
+.pv-action-btn:hover {
+    background: var(--gold);
+    color: var(--text-on-gold);
+}
+
+.pv-action-btn.danger:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+.pv-client-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.pv-client-company {
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.pv-client-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pv-client-meta-item {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pv-client-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.pv-client-quotations-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.pv-client-quotations-count span {
+    color: var(--gold);
+    font-weight: 700;
+}
+
+/* ---------- Empty State ---------- */
+.pv-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.pv-empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.pv-empty-state-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.pv-empty-state-desc {
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+/* ---------- Modal ---------- */
+.pv-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+.pv-modal-overlay.active {
+    display: flex;
+}
+
+.pv-modal {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: modalSlideIn 0.3s ease;
+}
+
+.pv-modal.pv-modal-wide {
+    max-width: 900px;
+}
+
+.pv-modal.pv-modal-xl {
+    max-width: 1100px;
+}
+
+@keyframes modalSlideIn {
+    from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pv-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.pv-modal-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.pv-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.pv-modal-close:hover {
+    color: var(--text-primary);
+    background: var(--bg-surface-hover);
+}
+
+.pv-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.pv-modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* ---------- Form Styles ---------- */
+.pv-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.pv-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pv-form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.pv-form-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pv-form-input,
+.pv-form-textarea {
+    padding: 10px 14px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.pv-form-input:focus,
+.pv-form-textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.pv-form-textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* ---------- Client Detail Modal ---------- */
+.pv-client-detail-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.pv-client-detail-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--gold-muted);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.pv-client-detail-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.pv-client-detail-info p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.pv-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.pv-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pv-detail-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.pv-detail-value {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.pv-detail-notes {
+    background: var(--bg-input);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 20px;
+}
+
+.pv-client-quotations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pv-mini-quotation-card {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pv-mini-quotation-card:hover {
+    border-color: var(--gold-muted);
+}
+
+.pv-mini-quotation-id {
+    font-weight: 700;
+    color: var(--gold);
+    font-size: 0.85rem;
+}
+
+.pv-mini-quotation-meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.pv-mini-quotation-amount {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* ---------- Status Badges ---------- */
+.pv-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pv-badge-draft {
+    background: var(--bg-surface-elevated);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-default);
+}
+
+.pv-badge-sent {
+    background: #1a2a3a;
+    color: var(--info);
+    border: 1px solid var(--info);
+}
+
+.pv-badge-approved {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.pv-badge-rejected {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+/* Invoice Status Badges */
+.pv-badge-draft {
+    background: var(--bg-surface-elevated);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-default);
+}
+
+.pv-badge-sent {
+    background: #1a2a3a;
+    color: var(--info);
+    border: 1px solid var(--info);
+}
+
+.pv-badge-partially-paid {
+    background: #3a2a0a;
+    color: #ffa726;
+    border: 1px solid #ffa726;
+}
+
+.pv-badge-paid {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.pv-badge-overdue {
+    background: #3a0a0a;
+    color: #ef5350;
+    border: 1px solid #ef5350;
+}
+
+.pv-badge-cancelled {
+    background: #1a1a1a;
+    color: #666;
+    border: 1px solid #444;
+}
+
+/* ---------- Quotation List ---------- */
+.pv-quotations-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+}
+
+.pv-data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pv-data-table thead th {
+    background: var(--bg-surface-elevated);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+    white-space: nowrap;
+}
+
+.pv-data-table tbody tr {
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pv-data-table tbody tr:hover {
+    background: var(--bg-surface-hover);
+}
+
+.pv-data-table tbody td {
+    padding: 14px 16px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.pv-data-table .col-number {
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.pv-data-table .col-amount {
+    font-weight: 700;
+    text-align: right;
+}
+
+/* ---------- Invoice List ---------- */
+.pv-invoices-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+}
+
+.pv-invoice-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.pv-invoice-stat {
+    text-align: center;
+    padding: 12px;
+    background: var(--bg-input);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+}
+
+.pv-invoice-stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.pv-invoice-stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.pv-invoice-stat-value.outstanding {
+    color: var(--danger);
+}
+
+.pv-invoice-stat-value.paid {
+    color: var(--success);
+}
+
+/* ---------- Client Balance Banner ---------- */
+.pv-client-balance-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-subtle);
+}
+
+.pv-client-balance-banner.paid {
+    background: rgba(76, 175, 80, 0.1);
+    border-color: var(--success);
+}
+
+.pv-client-balance-banner.outstanding {
+    background: rgba(244, 67, 54, 0.1);
+    border-color: var(--danger);
+}
+
+.pv-client-balance-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.pv-client-balance-banner.paid .pv-client-balance-label {
+    color: var(--success);
+}
+
+.pv-client-balance-banner.outstanding .pv-client-balance-label {
+    color: var(--danger);
+}
+
+.pv-client-balance-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.pv-client-balance-banner.paid .pv-client-balance-amount {
+    color: var(--success);
+}
+
+.pv-client-balance-banner.outstanding .pv-client-balance-amount {
+    color: var(--danger);
+}
+
+.pv-client-balance-count {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* ---------- Mini Invoice Card (in client detail) ---------- */
+.pv-client-invoices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pv-mini-invoice-card {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pv-mini-invoice-card:hover {
+    border-color: var(--gold-muted);
+}
+
+.pv-mini-invoice-id {
+    font-weight: 700;
+    color: var(--gold);
+    font-size: 0.85rem;
+}
+
+.pv-mini-invoice-meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.pv-mini-invoice-amount {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* ---------- Create Quotation Flow ---------- */
+.pv-flow-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 20px;
+    align-items: start;
+}
+
+.pv-flow-main {
+    min-width: 0;
+}
+
+.pv-flow-sidebar {
+    position: sticky;
+    top: 80px;
+}
+
+.pv-flow-step {
+    margin-bottom: 20px;
+}
+
+.pv-flow-step-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.pv-flow-step-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--text-on-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.pv-flow-step-title {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* ---------- Catalog Browser for Quotation ---------- */
+.pv-catalog-browser {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.pv-catalog-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.pv-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    padding: 16px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.pv-catalog-card {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    transition: var(--transition);
+}
+
+.pv-catalog-card:hover {
+    border-color: var(--gold-muted);
+}
+
+.pv-catalog-card-image {
+    width: 100%;
+    height: 100px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-sm);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 2rem;
+    overflow: hidden;
+}
+
+.pv-catalog-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pv-catalog-card-code {
+    font-size: 0.75rem;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.pv-catalog-card-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pv-catalog-card-oem {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.pv-catalog-card-price {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.pv-catalog-card .pv-btn {
+    width: 100%;
+}
+
+/* ---------- Cart Panel (Slide-out) ---------- */
+.pv-cart-panel-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 900;
+}
+
+.pv-cart-panel-overlay.active {
+    display: block;
+}
+
+.pv-cart-panel {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 420px;
+    max-width: 100vw;
+    height: 100vh;
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border-default);
+    z-index: 950;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-lg);
+}
+
+.pv-cart-panel.active {
+    right: 0;
+}
+
+.pv-cart-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pv-cart-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pv-cart-count {
+    background: var(--gold);
+    color: var(--text-on-gold);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.pv-cart-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.3rem;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+}
+
+.pv-cart-close:hover {
+    color: var(--text-primary);
+    background: var(--bg-surface-hover);
+}
+
+.pv-cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pv-cart-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}
+
+.pv-cart-item {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.pv-cart-item-image {
+    width: 50px;
+    height: 50px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.pv-cart-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pv-cart-item-details {
+    min-width: 0;
+}
+
+.pv-cart-item-code {
+    font-size: 0.7rem;
+    color: var(--gold);
+    font-weight: 700;
+}
+
+.pv-cart-item-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pv-cart-item-oem {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.pv-cart-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.pv-cart-item-qty button {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid var(--border-default);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.pv-cart-item-qty button:hover {
+    border-color: var(--gold);
+}
+
+.pv-cart-item-qty input {
+    width: 44px;
+    text-align: center;
+    padding: 2px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+}
+
+.pv-cart-item-qty input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.pv-cart-item-price-input {
+    width: 70px;
+    text-align: right;
+    padding: 4px 6px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
+    color: var(--gold);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.pv-cart-item-price-input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.pv-cart-item-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.pv-cart-item-total {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.pv-cart-item-remove {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 4px;
+}
+
+.pv-cart-item-remove:hover {
+    color: var(--danger);
+}
+
+.pv-cart-footer {
+    padding: 16px 20px;
+    border-top: 2px solid var(--gold-muted);
+    background: var(--bg-input);
+}
+
+.pv-cart-subtotal {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.pv-cart-tax {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.pv-cart-tax-input {
+    width: 50px;
+    text-align: center;
+    padding: 2px 4px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+}
+
+.pv-cart-tax-input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.pv-cart-grand-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+    padding-top: 8px;
+    border-top: 1px solid var(--border-subtle);
+    margin-bottom: 12px;
+}
+
+.pv-cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pv-cart-actions .pv-btn {
+    width: 100%;
+}
+
+/* ---------- Floating Cart Toggle ---------- */
+.pv-floating-cart {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 800;
+}
+
+.pv-floating-cart-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--text-on-gold);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 16px rgba(212,175,55,0.4);
+    transition: var(--transition);
+    position: relative;
+}
+
+.pv-floating-cart-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 24px rgba(212,175,55,0.5);
+}
+
+.pv-floating-cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--danger);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- Quotation Viewer ---------- */
+.pv-quotation-viewer {
+    background: #fff;
+    color: #000;
+    padding: 40px;
+    border-radius: var(--radius-sm);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.pv-quotation-viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #d4af37;
+}
+
+.pv-quotation-viewer-company {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.pv-quotation-viewer-logo {
+    width: 60px;
+    height: 60px;
+    background: #d4af37;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0a0a0a;
+    font-weight: 800;
+    font-size: 0.7rem;
+    text-align: center;
+    line-height: 1.1;
+}
+
+.pv-quotation-viewer-company h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #0a0a0a;
+    text-transform: uppercase;
+}
+
+.pv-quotation-viewer-company p {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 2px;
+}
+
+.pv-quotation-viewer-meta {
+    text-align: right;
+}
+
+.pv-quotation-viewer-meta h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.pv-quotation-viewer-meta p {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.pv-quotation-viewer-label {
+    font-weight: 700;
+    color: #333;
+}
+
+.pv-quotation-viewer-section {
+    margin-bottom: 24px;
+}
+
+.pv-quotation-viewer-section h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pv-quotation-viewer-client-box {
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 16px;
+    font-size: 0.85rem;
+}
+
+.pv-quotation-viewer-client-box p {
+    margin-bottom: 2px;
+    color: #444;
+}
+
+.pv-quotation-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.pv-quotation-table thead th {
+    background: #f0f0f0;
+    border-top: 2px solid #333;
+    border-bottom: 2px solid #333;
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 700;
+    color: #333;
+}
+
+.pv-quotation-table thead th:last-child,
+.pv-quotation-table tbody td:last-child {
+    text-align: right;
+}
+
+.pv-quotation-table tbody td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #444;
+    vertical-align: top;
+}
+
+.pv-quotation-table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.pv-quotation-table .col-num {
+    width: 30px;
+    text-align: center;
+}
+
+.pv-quotation-table .col-qty,
+.pv-quotation-table .col-price {
+    text-align: center;
+}
+
+.pv-quotation-table .col-total {
+    text-align: right;
+    font-weight: 600;
+}
+
+.pv-quotation-summary {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pv-quotation-summary-box {
+    width: 300px;
+}
+
+.pv-quotation-summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.pv-quotation-summary-row.grand-total {
+    border-top: 2px solid #333;
+    border-bottom: 2px solid #333;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.pv-quotation-viewer-notes {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 24px;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.pv-quotation-viewer-notes h4 {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.pv-quotation-viewer-bank {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.pv-quotation-viewer-bank h4 {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.pv-quotation-viewer-footer-text {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #888;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* ---------- Quotation Actions Bar ---------- */
+.pv-quotation-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+}
+
+/* ---------- Toast Notifications ---------- */
+.pv-toast-container {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.pv-toast {
+    background: var(--bg-surface-elevated);
+    color: var(--text-primary);
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: toastSlideUp 0.3s ease;
+    max-width: 400px;
+}
+
+.pv-toast.success {
+    border-color: var(--success);
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.pv-toast.error {
+    border-color: var(--danger);
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+.pv-toast.warning {
+    border-color: var(--warning);
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+
+@keyframes toastSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Step Progress ---------- */
+.pv-step-progress {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 24px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    padding: 16px 24px;
+    border: 1px solid var(--border-subtle);
+}
+
+.pv-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pv-step-indicator .step-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--border-default);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+}
+
+.pv-step-indicator .step-circle.active {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: var(--text-on-gold);
+}
+
+.pv-step-indicator .step-circle.done {
+    border-color: var(--success);
+    background: var(--success);
+    color: #fff;
+}
+
+.pv-step-indicator .step-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.pv-step-indicator.active .step-label {
+    color: var(--gold);
+}
+
+.pv-step-connector {
+    flex: 1;
+    height: 2px;
+    background: var(--border-subtle);
+    margin: 0 12px;
+    min-width: 30px;
+}
+
+.pv-step-connector.done {
+    background: var(--success);
+}
+
+/* ---------- Settings Panel ---------- */
+.pv-settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* ---------- Responsive Design ---------- */
+@media (max-width: 768px) {
+    .pv-flow-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .pv-flow-sidebar {
+        position: relative;
+        top: 0;
+    }
+    
+    .pv-cart-panel {
+        width: 100vw;
+        right: -100vw;
+    }
+    
+    .pv-form-grid,
+    .pv-settings-grid,
+    .pv-detail-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pv-clients-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pv-catalog-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .pv-quotation-viewer,
+    .pv-invoice-viewer {
+        padding: 20px;
+    }
+
+    .pv-quotation-viewer-header,
+    .pv-invoice-viewer-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .pv-quotation-viewer-meta,
+    .pv-invoice-viewer-meta {
+        text-align: left;
+    }
+
+    .pv-quotation-summary-box,
+    .pv-invoice-summary-box {
+        width: 100%;
+    }
+
+    .pv-invoice-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .pv-receipt-viewer {
+        padding: 20px;
+    }
+    
+    .pv-tabs {
+        padding: 0 12px;
+    }
+    
+    .pv-tab-btn {
+        padding: 12px 16px;
+        font-size: 0.8rem;
+    }
+    
+    .pv-tab-content {
+        padding: 16px;
+    }
+    
+    .pv-header {
+        padding: 12px 16px;
+    }
+    
+    .pv-logo-brand {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pv-catalog-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pv-data-table {
+        font-size: 0.75rem;
+    }
+    
+    .pv-data-table thead th,
+    .pv-data-table tbody td {
+        padding: 10px 8px;
+    }
+    
+    .pv-search-row {
+        flex-direction: column;
+    }
+    
+    .pv-search-input {
+        width: 100%;
+    }
+}
+
+/* ---------- Invoice Viewer ---------- */
+.pv-invoice-viewer {
+    background: #fff;
+    color: #000;
+    padding: 40px;
+    border-radius: var(--radius-sm);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.pv-invoice-viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #d4af37;
+}
+
+.pv-invoice-viewer-company {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.pv-invoice-viewer-company .doc-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.pv-invoice-viewer-company h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #0a0a0a;
+    text-transform: uppercase;
+}
+
+.pv-invoice-viewer-company p {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 2px;
+}
+
+.pv-invoice-viewer-meta {
+    text-align: right;
+}
+
+.pv-invoice-viewer-meta h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.pv-invoice-viewer-meta p {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.pv-invoice-viewer-label {
+    font-weight: 700;
+    color: #333;
+}
+
+.pv-invoice-viewer-section {
+    margin-bottom: 24px;
+}
+
+.pv-invoice-viewer-section h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pv-invoice-viewer-client-box {
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 16px;
+    font-size: 0.85rem;
+}
+
+.pv-invoice-viewer-client-box p {
+    margin-bottom: 2px;
+    color: #444;
+}
+
+.pv-invoice-summary {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pv-invoice-summary-box {
+    width: 300px;
+}
+
+.pv-invoice-summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.pv-invoice-summary-row.grand-total {
+    border-top: 2px solid #333;
+    border-bottom: 2px solid #333;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.pv-invoice-summary-row.paid-row {
+    color: #4caf50;
+}
+
+.pv-invoice-summary-row.balance-row {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.pv-invoice-summary-row.balance-row.paid {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 8px 12px;
+    margin: 0 -12px;
+    border-radius: 4px;
+}
+
+.pv-invoice-summary-row.balance-row.partial {
+    background: #fff3e0;
+    color: #e65100;
+    padding: 8px 12px;
+    margin: 0 -12px;
+    border-radius: 4px;
+}
+
+.pv-invoice-summary-row.balance-row.overdue {
+    background: #ffebee;
+    color: #c62828;
+    padding: 8px 12px;
+    margin: 0 -12px;
+    border-radius: 4px;
+}
+
+.pv-invoice-viewer-notes {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 24px;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.pv-invoice-viewer-notes h4 {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.pv-invoice-viewer-bank {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.pv-invoice-viewer-bank h4 {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.pv-invoice-viewer-footer-text {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #888;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* ---------- Payment History ---------- */
+.pv-invoice-payment-history {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.pv-invoice-payment-history h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pv-payment-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.pv-payment-table thead th {
+    background: #f0f0f0;
+    border-top: 2px solid #333;
+    border-bottom: 2px solid #333;
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 700;
+    color: #333;
+}
+
+.pv-payment-table tbody td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #444;
+}
+
+.pv-payment-table .col-receipt {
+    font-weight: 700;
+    color: #d4af37;
+}
+
+.pv-payment-table .col-amount {
+    text-align: right;
+    font-weight: 600;
+}
+
+/* ---------- Receipt Viewer ---------- */
+.pv-receipt-viewer {
+    background: #fff;
+    color: #000;
+    padding: 40px;
+    border-radius: var(--radius-sm);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid #d4af37;
+    border-radius: 12px;
+}
+
+.pv-receipt-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #d4af37;
+}
+
+.pv-receipt-header .doc-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.pv-receipt-header h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #0a0a0a;
+    text-transform: uppercase;
+}
+
+.pv-receipt-header p {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 2px;
+}
+
+.pv-receipt-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #d4af37;
+    margin: 20px 0;
+    letter-spacing: 3px;
+}
+
+.pv-receipt-meta {
+    margin-bottom: 20px;
+}
+
+.pv-receipt-meta-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.85rem;
+    color: #444;
+}
+
+.pv-receipt-label {
+    font-weight: 700;
+    color: #333;
+}
+
+.pv-receipt-from {
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    padding: 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.pv-receipt-from p {
+    margin-bottom: 2px;
+    font-size: 0.85rem;
+    color: #444;
+}
+
+.pv-receipt-amount {
+    text-align: center;
+    padding: 30px;
+    background: #f8f8f8;
+    border: 2px solid #d4af37;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.pv-receipt-amount .pv-receipt-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.pv-receipt-amount-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #0a0a0a;
+}
+
+.pv-receipt-balance {
+    margin: 20px 0;
+}
+
+.pv-receipt-balance > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.pv-receipt-notes {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: #555;
+    background: #fafafa;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.pv-receipt-thanks {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #d4af37;
+    font-weight: 600;
+    margin: 30px 0 20px;
+}
+
+.pv-receipt-footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #888;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* ---------- Invoice Catalog (inline item adder) ---------- */
+.pv-invoice-catalog-section {
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 2px dashed #e0e0e0;
+}
+
+.pv-invoice-catalog-section h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pv-invoice-catalog-search {
+    margin-bottom: 12px;
+}
+
+.pv-invoice-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.pv-invoice-catalog-card {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.pv-invoice-catalog-card:hover {
+    border-color: #d4af37;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pv-invoice-catalog-img {
+    width: 100%;
+    height: 80px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 1.5rem;
+    overflow: hidden;
+}
+
+.pv-invoice-catalog-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pv-invoice-catalog-code {
+    font-size: 0.7rem;
+    color: #b8932a;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.pv-invoice-catalog-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pv-invoice-catalog-price {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #0a0a0a;
+    margin-bottom: 8px;
+}
+
+.pv-invoice-catalog-card .pv-btn {
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 0.7rem;
+}
+
+/* ---------- Invoice Item Inline Editing ---------- */
+.pv-invoice-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+}
+
+.pv-invoice-item-qty button {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+}
+
+.pv-invoice-item-qty button:hover {
+    border-color: #d4af37;
+    background: #fff8e1;
+}
+
+.pv-invoice-item-qty input {
+    width: 40px;
+    text-align: center;
+    padding: 2px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #000;
+    font-size: 0.8rem;
+}
+
+.pv-invoice-item-qty input:focus {
+    outline: none;
+    border-color: #d4af37;
+}
+
+.pv-invoice-price-input {
+    width: 70px;
+    text-align: right;
+    padding: 3px 6px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.pv-invoice-price-input:focus {
+    outline: none;
+    border-color: #d4af37;
+}
+
+/* ---------- Modal Size ---------- */
+.pv-modal.pv-modal-lg {
+    max-width: 700px;
+}
+
+/* ---------- Print Styles ---------- */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    .pv-quotation-viewer,
+    .pv-quotation-viewer * {
+        visibility: visible;
+    }
+    
+    .pv-quotation-viewer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background: #fff !important;
+        color: #000 !important;
+    }
+    
+    .pv-quotation-actions {
+        display: none !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .pv-invoice-viewer,
+    .pv-invoice-viewer * {
+        visibility: visible;
+    }
+
+    .pv-invoice-viewer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    .pv-receipt-viewer,
+    .pv-receipt-viewer * {
+        visibility: visible;
+    }
+
+    .pv-receipt-viewer {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+        background: #fff !important;
+        color: #000 !important;
+        border: none !important;
+    }
+}
+
+/* ---------- Scrollbar Styling ---------- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-default);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* ---------- Misc Utilities ---------- */
+.pv-hidden {
+    display: none !important;
+}
+
+.pv-text-right {
+    text-align: right;
+}
+
+.pv-text-center {
+    text-align: center;
+}
+
+.pv-mt-1 { margin-top: 8px; }
+.pv-mt-2 { margin-top: 16px; }
+.pv-mb-1 { margin-bottom: 8px; }
+.pv-mb-2 { margin-bottom: 16px; }
+
+.pv-flex {
+    display: flex;
+}
+
+.pv-flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

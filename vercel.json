@@ -5,12 +5,16 @@
     {
       "src": "index.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "api/admin-auth.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/admin/(.*)",
-      "dest": "/admin/index.html"
+      "dest": "/api/admin-auth.js"
     },
     {
       "src": "/(.*)",
@@ -38,13 +42,19 @@
     {
       "source": "/(.*\\.(js|css))",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/(.*\\.(svg|png|jpg|jpeg|gif|json))",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     }
   ]

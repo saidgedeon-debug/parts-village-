@@ -14,17 +14,6 @@
 </head>
 <body>
 
-<!-- DEBUG STATUS BAR -->
-<div id="debug-status" style="position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a1a1a;border-bottom:2px solid #d4af37;padding:8px 16px;font-size:12px;font-family:monospace;color:#e0e0e0;display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
-    <span id="status-db">📁 Database: <span style="color:#ff9800">Loading...</span></span>
-    <span id="status-count">📦 Products: <span style="color:#ff9800">0</span></span>
-    <span id="status-images">🖼️ Images: <span style="color:#ff9800">Checking...</span></span>
-    <span id="status-search">🔍 Search: <span style="color:#ff9800">Waiting...</span></span>
-    <span id="status-mode">🌐 Mode: <span style="color:#ff9800">Unknown</span></span>
-    <button onclick="document.getElementById('debug-status').style.display='none'" style="margin-left:auto;background:#d4af37;color:#000;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:11px;font-weight:bold;">✕ Hide</button>
-</div>
-<div style="height:42px;"></div>
-
 <!-- HEADER -->
 <header class="pv-header">
     <div class="pv-header-inner">
@@ -41,32 +30,16 @@
                    placeholder="Search part number, code, name, machine model..." autocomplete="off">
             <button class="pv-search-clear" id="search-clear">✕</button>
         </div>
+        <a href="suppliers/index.html" class="pv-suppliers-link" title="Suppliers & Inquiries">
+            <span class="pv-suppliers-icon">🏭</span>
+            <span class="pv-suppliers-text">Suppliers</span>
+        </a>
+        <a href="clients/index.html" class="pv-clients-link" title="Clients & Quotations">
+            <span class="pv-clients-icon">👥</span>
+            <span class="pv-clients-text">Clients</span>
+        </a>
     </div>
 </header>
-
-<!-- STATS BAR -->
-<div class="pv-stats">
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-total">0</div>
-        <div class="pv-stat-label">Total Parts</div>
-    </div>
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-complete">0</div>
-        <div class="pv-stat-label">Complete</div>
-    </div>
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-needs-image">0</div>
-        <div class="pv-stat-label">Needs Image</div>
-    </div>
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-needs-verification">0</div>
-        <div class="pv-stat-label">Needs Verify</div>
-    </div>
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-images">0</div>
-        <div class="pv-stat-label">With Images</div>
-    </div>
-</div>
 
 <!-- FILTERS -->
 <div class="pv-filters">
@@ -119,7 +92,8 @@
 <script>
 window.ENV = {
     SUPABASE_URL: 'https://ljmvpmnwjvlxgjixsxxo.supabase.co',
-    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqbXZwbW53anZseGdqaXhzeHhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTE3NzgsImV4cCI6MjA5NjU4Nzc3OH0.ioUHZlEfoGEhke26ZHGTWFZkycffkml4mLWmKj5V3sI'
+    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqbXZwbW53anZseGdqaXhzeHhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTE3NzgsImV4cCI6MjA5NjU4Nzc3OH0.ioUHZlEfoGEhke26ZHGTWFZkycffkml4mLWmKj5V3sI',
+    COST_PASSWORD: 'admin123'
 };
 </script>
 
@@ -127,7 +101,33 @@ window.ENV = {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <!-- Application Scripts -->
-<script src="js/supabase-client-v3.js"></script>
-<script src="js/app-v3.js"></script>
+<!-- COST PRICE REQUEST MODAL -->
+<div id="cost-price-modal" class="cost-modal-overlay">
+    <div class="cost-modal">
+        <div class="cost-modal-header">
+            <h2>&#128272; Cost Price Access</h2>
+            <button class="cost-modal-close" onclick="PVApp.closeCostPriceModal()">&#10005;</button>
+        </div>
+        <div class="cost-modal-body">
+            <!-- Password Screen -->
+            <div id="cost-password-screen">
+                <p class="cost-hint">Cost prices are protected. Enter the access password to view pricing for this item.</p>
+                <div class="cost-field">
+                    <label>Access Password</label>
+                    <input type="password" id="cost-password-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')PVApp.verifyCostPassword()">
+                </div>
+                <div id="cost-password-error" class="cost-password-error"></div>
+                <button class="btn-cost-unlock" onclick="PVApp.verifyCostPassword()">&#128275; Unlock Cost Prices</button>
+            </div>
+            <!-- Cost Data Screen (hidden initially) -->
+            <div id="cost-data-screen" style="display:none;">
+                <div id="cost-data-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

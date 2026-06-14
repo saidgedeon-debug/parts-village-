@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parts Village - Clients, Quotations & Invoicing</title>
+    <link rel="stylesheet" href="css/clients.css">
+</head>
+<body>
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="pv-header">
+        <div class="pv-header-left">
+            <div class="pv-logo">
+                <span class="pv-logo-brand">PARTS VILLAGE</span>
+                <span class="pv-logo-subtitle">Clients, Quotations & Invoicing</span>
+            </div>
+            <a href="../index.html" class="pv-back-link">
+                <span>&#8592;</span> Back to Catalog
+            </a>
+        </div>
+        <button class="pv-settings-btn" onclick="app.openSettingsModal()">
+            <span>&#9881;</span> Settings
+        </button>
+    </header>
+
+    <!-- ==================== TAB NAVIGATION ==================== -->
+    <nav class="pv-tabs">
+        <button class="pv-tab-btn active" data-tab="clients" onclick="app.switchTab('clients')">
+            Clients
+            <span class="pv-tab-badge" id="client-count-badge">0</span>
+        </button>
+        <button class="pv-tab-btn" data-tab="create-quotation" onclick="app.switchTab('create-quotation')">
+            Create Quotation
+        </button>
+        <button class="pv-tab-btn" data-tab="quotations" onclick="app.switchTab('quotations')">
+            Quotations
+            <span class="pv-tab-badge" id="quotation-count-badge">0</span>
+        </button>
+        <button class="pv-tab-btn" data-tab="invoices" onclick="app.switchTab('invoices')">
+            Invoices
+            <span class="pv-tab-badge" id="invoice-count-badge">0</span>
+        </button>
+    </nav>
+
+    <!-- ==================== CLIENTS TAB ==================== -->
+    <div class="pv-tab-content active" id="tab-clients">
+        <div class="pv-section-header">
+            <h2 class="pv-section-title">Client Directory</h2>
+            <button class="pv-btn pv-btn-gold" onclick="app.openClientModal()">
+                <span>+</span> Add New Client
+            </button>
+        </div>
+        <div class="pv-search-row">
+            <input type="text" class="pv-search-input" id="client-search" placeholder="Search clients by name, company, phone or email..." oninput="app.searchClients()">
+        </div>
+        <div class="pv-clients-grid" id="clients-grid">
+            <!-- Client cards rendered here -->
+        </div>
+        <div class="pv-empty-state" id="clients-empty" style="display:none;">
+            <div class="pv-empty-state-icon">&#128100;</div>
+            <div class="pv-empty-state-title">No Clients Yet</div>
+            <div class="pv-empty-state-desc">Add your first client to start creating quotations.</div>
+            <button class="pv-btn pv-btn-gold" onclick="app.openClientModal()">Add New Client</button>
+        </div>
+    </div>
+
+    <!-- ==================== CREATE QUOTATION TAB ==================== -->
+    <div class="pv-tab-content" id="tab-create-quotation">
+        <div class="pv-section-header">
+            <h2 class="pv-section-title">Create New Quotation</h2>
+        </div>
+
+        <!-- Step Progress -->
+        <div class="pv-step-progress">
+            <div class="pv-step-indicator active" id="step-ind-1">
+                <div class="step-circle active">1</div>
+                <span class="step-label">Select Client</span>
+            </div>
+            <div class="pv-step-connector" id="step-conn-1"></div>
+            <div class="pv-step-indicator" id="step-ind-2">
+                <div class="step-circle">2</div>
+                <span class="step-label">Add Items</span>
+            </div>
+            <div class="pv-step-connector" id="step-conn-2"></div>
+            <div class="pv-step-indicator" id="step-ind-3">
+                <div class="step-circle">3</div>
+                <span class="step-label">Review & Generate</span>
+            </div>
+        </div>
+
+        <div class="pv-flow-layout">
+            <!-- Main: Client Selection + Catalog -->
+            <div class="pv-flow-main">
+                <!-- Step 1: Client Selection -->
+                <div class="pv-flow-step" id="flow-step-1">
+                    <div class="pv-flow-step-header">
+                        <span class="pv-flow-step-number">1</span>
+                        <span class="pv-flow-step-title">Select or Create Client</span>
+                    </div>
+                    <div class="pv-form-group" style="margin-bottom:12px;">
+                        <label class="pv-form-label">Choose Existing Client</label>
+                        <select class="pv-select" id="quotation-client-select" onchange="app.onClientSelectChange()" style="width:100%;">
+                            <option value="">-- Select a client --</option>
+                        </select>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:12px; margin:12px 0; color:var(--text-muted); font-size:0.85rem;">
+                        <span style="flex:1; height:1px; background:var(--border-subtle);"></span>
+                        <span>OR</span>
+                        <span style="flex:1; height:1px; background:var(--border-subtle);"></span>
+                    </div>
+                    <button class="pv-btn pv-btn-outline" onclick="app.openClientModal(true)">
+                        <span>+</span> Create New Client
+                    </button>
+                </div>
+
+                <!-- Step 2: Catalog Browser -->
+                <div class="pv-flow-step" id="flow-step-2">
+                    <div class="pv-flow-step-header">
+                        <span class="pv-flow-step-number">2</span>
+                        <span class="pv-flow-step-title">Browse Catalog & Add Items</span>
+                    </div>
+                    <div class="pv-catalog-browser">
+                        <div class="pv-catalog-header">
+                            <input type="text" class="pv-search-input" id="catalog-search" placeholder="Search catalog by name, part number, item code..." oninput="app.renderCatalogForQuotation()" style="flex:1; margin-bottom:0;">
+                            <select class="pv-select" id="catalog-category-filter" onchange="app.renderCatalogForQuotation()">
+                                <option value="">All Categories</option>
+                            </select>
+                        </div>
+                        <div class="pv-catalog-grid" id="catalog-grid-for-quotation">
+                            <!-- Catalog items rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar: Cart Summary -->
+            <div class="pv-flow-sidebar">
+                <div style="background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); overflow:hidden;">
+                    <div style="padding:14px 16px; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:700; font-size:0.95rem;">Quotation Summary</span>
+                        <span class="pv-badge pv-badge-draft" id="cart-status-badge">Draft</span>
+                    </div>
+                    <div style="padding:16px;">
+                        <div id="cart-summary-client" style="margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid var(--border-subtle);">
+                            <span style="color:var(--text-muted); font-size:0.8rem;">No client selected</span>
+                        </div>
+                        <div id="mini-cart-items" style="max-height:300px; overflow-y:auto;">
+                            <div class="pv-cart-empty">
+                                <div style="font-size:2rem; margin-bottom:8px;">&#128722;</div>
+                                <div style="font-size:0.85rem; color:var(--text-secondary);">Cart is empty</div>
+                                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Add items from catalog</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:16px; border-top:2px solid var(--gold-muted); background:var(--bg-input);">
+                        <div class="pv-cart-subtotal">
+                            <span>Subtotal</span>
+                            <span id="mini-cart-subtotal">$0.00</span>
+                        </div>
+                        <div class="pv-cart-tax">
+                            <span>Tax <input type="number" class="pv-cart-tax-input" id="mini-cart-tax-rate" value="0" min="0" max="100" step="0.5" onchange="app.updateCartTaxRate()">%</span>
+                            <span id="mini-cart-tax-amount">$0.00</span>
+                        </div>
+                        <div class="pv-cart-grand-total">
+                            <span>Grand Total</span>
+                            <span id="mini-cart-total">$0.00</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
+                            <button class="pv-btn pv-btn-gold" id="btn-generate-quotation" onclick="app.createQuotation()" disabled>
+                                &#128221; Generate Quotation
+                            </button>
+                            <button class="pv-btn pv-btn-outline pv-btn-sm" onclick="app.clearCart()">
+                                &#128465; Clear Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== QUOTATIONS TAB ==================== -->
+    <div class="pv-tab-content" id="tab-quotations">
+        <div class="pv-section-header">
+            <h2 class="pv-section-title">All Quotations</h2>
+            <div class="pv-flex" style="gap:10px;">
+                <select class="pv-select" id="quotation-filter-client" onchange="app.renderQuotations()">
+                    <option value="">All Clients</option>
+                </select>
+                <select class="pv-select" id="quotation-filter-status" onchange="app.renderQuotations()">
+                    <option value="">All Status</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Sent">Sent</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+        </div>
+        <div class="pv-quotations-table-wrap" id="quotations-table-wrap">
+            <table class="pv-data-table">
+                <thead>
+                    <tr>
+                        <th>Quotation #</th>
+                        <th>Client</th>
+                        <th>Date</th>
+                        <th>Items</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Sent Via</th>
+                    </tr>
+                </thead>
+                <tbody id="quotations-tbody">
+                    <!-- Quotation rows rendered here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="pv-empty-state" id="quotations-empty" style="display:none;">
+            <div class="pv-empty-state-icon">&#128221;</div>
+            <div class="pv-empty-state-title">No Quotations Yet</div>
+            <div class="pv-empty-state-desc">Create your first quotation from the Create Quotation tab.</div>
+            <button class="pv-btn pv-btn-gold" onclick="app.switchTab('create-quotation')">Create Quotation</button>
+        </div>
+    </div>
+
+    <!-- ==================== INVOICES TAB ==================== -->
+    <div class="pv-tab-content" id="tab-invoices">
+        <div class="pv-section-header">
+            <h2 class="pv-section-title">Invoices</h2>
+            <div class="pv-flex" style="gap:10px;">
+                <select class="pv-select" id="invoice-filter-client" onchange="app.onInvoiceFilterChange()">
+                    <option value="">All Clients</option>
+                </select>
+                <select class="pv-select" id="invoice-filter-status" onchange="app.onInvoiceFilterChange()">
+                    <option value="">All Status</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Sent">Sent</option>
+                    <option value="Partially Paid">Partially Paid</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Overdue">Overdue</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+                <button class="pv-btn pv-btn-gold" onclick="app.openCreateInvoiceModal()">
+                    <span>+</span> Create Invoice
+                </button>
+            </div>
+        </div>
+        <div class="pv-search-row">
+            <input type="text" class="pv-search-input" id="invoice-search" placeholder="Search invoices by number or client name..." oninput="app.searchInvoices()">
+        </div>
+        <div class="pv-invoices-table-wrap" id="invoices-table-wrap">
+            <table class="pv-data-table">
+                <thead>
+                    <tr>
+                        <th>Invoice #</th>
+                        <th>Client</th>
+                        <th>Date</th>
+                        <th>Due Date</th>
+                        <th>Total</th>
+                        <th>Paid</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                        <th class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody id="invoices-tbody">
+                    <!-- Invoice rows rendered here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="pv-empty-state" id="invoices-empty" style="display:none;">
+            <div class="pv-empty-state-icon">&#128179;</div>
+            <div class="pv-empty-state-title">No Invoices Yet</div>
+            <div class="pv-empty-state-desc">Create an invoice from a quotation or directly for a client.</div>
+            <button class="pv-btn pv-btn-gold" onclick="app.openCreateInvoiceModal()">Create Invoice</button>
+        </div>
+    </div>
+
+    <!-- ==================== ADD/EDIT CLIENT MODAL ==================== -->
+    <div class="pv-modal-overlay" id="client-modal-overlay" onclick="app.closeClientModal(event)">
+        <div class="pv-modal" onclick="event.stopPropagation()">
+            <div class="pv-modal-header">
+                <h3 class="pv-modal-title" id="client-modal-title">Add New Client</h3>
+                <button class="pv-modal-close" onclick="app.closeClientModal()">&times;</button>
+            </div>
+            <div class="pv-modal-body">
+                <form id="client-form" onsubmit="event.preventDefault(); app.saveClient();">
+                    <input type="hidden" id="client-id">
+                    <div class="pv-form-grid">
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Client Name *</label>
+                            <input type="text" class="pv-form-input" id="client-name" required placeholder="Full name">
+                        </div>
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Company Name</label>
+                            <input type="text" class="pv-form-input" id="client-company" placeholder="Company / Organization">
+                        </div>
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Phone Number *</label>
+                            <input type="tel" class="pv-form-input" id="client-phone" required placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Email Address</label>
+                            <input type="email" class="pv-form-input" id="client-email" placeholder="client@company.com">
+                        </div>
+                        <div class="pv-form-group full-width">
+                            <label class="pv-form-label">Address</label>
+                            <textarea class="pv-form-textarea" id="client-address" placeholder="Full billing/shipping address"></textarea>
+                        </div>
+                        <div class="pv-form-group full-width">
+                            <label class="pv-form-label">Notes</label>
+                            <textarea class="pv-form-textarea" id="client-notes" placeholder="Internal notes about this client..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="pv-modal-footer">
+                <button type="button" class="pv-btn pv-btn-outline" onclick="app.closeClientModal()">Cancel</button>
+                <button type="button" class="pv-btn pv-btn-gold" onclick="app.saveClient()">Save Client</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CLIENT DETAIL MODAL ==================== -->
+    <div class="pv-modal-overlay" id="client-detail-modal-overlay" onclick="app.closeClientDetailModal(event)">
+        <div class="pv-modal pv-modal-wide" onclick="event.stopPropagation()">
+            <div class="pv-modal-header">
+                <h3 class="pv-modal-title">Client Details</h3>
+                <button class="pv-modal-close" onclick="app.closeClientDetailModal()">&times;</button>
+            </div>
+            <div class="pv-modal-body" id="client-detail-body">
+                <!-- Client details rendered here -->
+            </div>
+            <div class="pv-modal-footer">
+                <button type="button" class="pv-btn pv-btn-outline" onclick="app.closeClientDetailModal()">Close</button>
+                <button type="button" class="pv-btn pv-btn-gold" id="btn-create-quotation-for-client" onclick="app.startQuotationForClient()">Create Quotation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== QUOTATION VIEWER MODAL ==================== -->
+    <div class="pv-modal-overlay" id="quotation-viewer-overlay" onclick="app.closeQuotationViewer(event)">
+        <div class="pv-modal pv-modal-xl" onclick="event.stopPropagation()">
+            <div class="pv-modal-header no-print">
+                <h3 class="pv-modal-title">Quotation</h3>
+                <button class="pv-modal-close" onclick="app.closeQuotationViewer()">&times;</button>
+            </div>
+            <div class="pv-modal-body" id="quotation-viewer-body" style="padding:0; background:var(--bg-primary);">
+                <!-- Quotation viewer rendered here -->
+            </div>
+            <div class="pv-quotation-actions no-print" id="quotation-viewer-actions">
+                <!-- Action buttons rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SETTINGS MODAL ==================== -->
+    <div class="pv-modal-overlay" id="settings-modal-overlay" onclick="app.closeSettingsModal(event)">
+        <div class="pv-modal pv-modal-wide" onclick="event.stopPropagation()">
+            <div class="pv-modal-header">
+                <h3 class="pv-modal-title">Company Settings</h3>
+                <button class="pv-modal-close" onclick="app.closeSettingsModal()">&times;</button>
+            </div>
+            <div class="pv-modal-body">
+                <form id="settings-form" onsubmit="event.preventDefault(); app.saveSettings();">
+                    <div class="pv-settings-grid">
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Company Name</label>
+                            <input type="text" class="pv-form-input" id="setting-company-name" value="Parts Village">
+                        </div>
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Phone</label>
+                            <input type="text" class="pv-form-input" id="setting-company-phone" placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Email</label>
+                            <input type="email" class="pv-form-input" id="setting-company-email" placeholder="info@partsvillage.com">
+                        </div>
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Website</label>
+                            <input type="text" class="pv-form-input" id="setting-company-website" placeholder="www.partsvillage.com">
+                        </div>
+                        <div class="pv-form-group full-width">
+                            <label class="pv-form-label">Address</label>
+                            <textarea class="pv-form-textarea" id="setting-company-address" placeholder="Company address..."></textarea>
+                        </div>
+                        <div class="pv-form-group full-width">
+                            <label class="pv-form-label">Bank Details</label>
+                            <textarea class="pv-form-textarea" id="setting-bank-details" placeholder="Bank name, Account number, IBAN, SWIFT..."></textarea>
+                        </div>
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Default Tax Rate (%)</label>
+                            <input type="number" class="pv-form-input" id="setting-default-tax" value="0" min="0" max="100" step="0.5">
+                        </div>
+                        <div class="pv-form-group">
+                            <label class="pv-form-label">Default Currency</label>
+                            <input type="text" class="pv-form-input" id="setting-currency" value="$">
+                        </div>
+                        <div class="pv-form-group full-width">
+                            <label class="pv-form-label">Default Payment Terms / Notes</label>
+                            <textarea class="pv-form-textarea" id="setting-default-notes" placeholder="Payment terms, delivery info, warranty notes..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="pv-modal-footer">
+                <button type="button" class="pv-btn pv-btn-outline" onclick="app.closeSettingsModal()">Cancel</button>
+                <button type="button" class="pv-btn pv-btn-danger pv-btn-sm" onclick="app.confirmResetAll()">Reset All Data</button>
+                <button type="button" class="pv-btn pv-btn-gold" onclick="app.saveSettings()">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CART PANEL (Slide-out) ==================== -->
+    <div class="pv-cart-panel-overlay" id="cart-panel-overlay" onclick="app.toggleCartPanel()"></div>
+    <div class="pv-cart-panel" id="cart-panel">
+        <div class="pv-cart-header">
+            <div class="pv-cart-title">
+                &#128722; Cart <span class="pv-cart-count" id="cart-panel-count">0</span>
+            </div>
+            <button class="pv-cart-close" onclick="app.toggleCartPanel()">&times;</button>
+        </div>
+        <div class="pv-cart-items" id="cart-panel-items">
+            <div class="pv-cart-empty">
+                <div style="font-size:2.5rem; margin-bottom:12px;">&#128722;</div>
+                <div style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:4px;">Your cart is empty</div>
+                <div style="font-size:0.8rem; color:var(--text-muted);">Browse the catalog and add items</div>
+            </div>
+        </div>
+        <div class="pv-cart-footer">
+            <div class="pv-cart-subtotal">
+                <span>Subtotal</span>
+                <span id="cart-panel-subtotal">$0.00</span>
+            </div>
+            <div class="pv-cart-tax">
+                <span>Tax <input type="number" class="pv-cart-tax-input" id="cart-panel-tax-rate" value="0" min="0" max="100" step="0.5" onchange="app.updateCartTaxRate()">%</span>
+                <span id="cart-panel-tax-amount">$0.00</span>
+            </div>
+            <div class="pv-cart-grand-total">
+                <span>Grand Total</span>
+                <span id="cart-panel-total">$0.00</span>
+            </div>
+            <div class="pv-cart-actions">
+                <button class="pv-btn pv-btn-gold" onclick="app.createQuotation()">
+                    &#128221; Generate Quotation
+                </button>
+                <button class="pv-btn pv-btn-outline pv-btn-sm" onclick="app.clearCart()">
+                    &#128465; Clear Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FLOATING CART BUTTON ==================== -->
+    <div class="pv-floating-cart no-print" id="floating-cart-btn" style="display:none;" onclick="app.toggleCartPanel()">
+        <button class="pv-floating-cart-btn">
+            &#128722;
+            <span class="pv-floating-cart-badge" id="floating-cart-count">0</span>
+        </button>
+    </div>
+
+    <!-- ==================== TOAST CONTAINER ==================== -->
+    <div class="pv-toast-container" id="toast-container"></div>
+
+    <!-- ==================== INVOICE VIEWER MODAL ==================== -->
+    <div class="pv-modal-overlay" id="invoice-viewer-overlay" onclick="app.closeInvoiceViewer(event)">
+        <div class="pv-modal pv-modal-xl" onclick="event.stopPropagation()">
+            <div class="pv-modal-header no-print">
+                <h3 class="pv-modal-title">Invoice</h3>
+                <button class="pv-modal-close" onclick="app.closeInvoiceViewer()">&times;</button>
+            </div>
+            <div class="pv-modal-body" id="invoice-viewer-body" style="padding:0; background:var(--bg-primary);">
+                <!-- Invoice viewer rendered here -->
+            </div>
+            <div class="pv-quotation-actions no-print" id="invoice-viewer-actions">
+                <!-- Action buttons rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== RECORD PAYMENT MODAL ==================== -->
+    <div class="pv-modal-overlay" id="payment-modal-overlay" onclick="app.closePaymentModal(event)">
+        <div class="pv-modal" onclick="event.stopPropagation()">
+            <div class="pv-modal-header">
+                <h3 class="pv-modal-title" id="payment-modal-title">Record Payment</h3>
+                <button class="pv-modal-close" onclick="app.closePaymentModal()">&times;</button>
+            </div>
+            <div class="pv-modal-body">
+                <form id="payment-form" onsubmit="event.preventDefault(); app.savePayment();">
+                    <div class="pv-form-group">
+                        <label class="pv-form-label">Amount *</label>
+                        <input type="number" class="pv-form-input" id="payment-amount" required placeholder="0.00" min="0.01" step="0.01">
+                    </div>
+                    <div class="pv-form-group">
+                        <label class="pv-form-label">Payment Method</label>
+                        <select class="pv-select" id="payment-method" style="width:100%;">
+                            <option value="Cash">Cash</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="Check">Check</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="pv-form-group">
+                        <label class="pv-form-label">Payment Date</label>
+                        <input type="date" class="pv-form-input" id="payment-date">
+                    </div>
+                    <div class="pv-form-group">
+                        <label class="pv-form-label">Notes</label>
+                        <textarea class="pv-form-textarea" id="payment-notes" placeholder="Optional notes about this payment..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="pv-modal-footer">
+                <button type="button" class="pv-btn pv-btn-outline" onclick="app.closePaymentModal()">Cancel</button>
+                <button type="button" class="pv-btn pv-btn-success" onclick="app.savePayment()">&#128179; Record Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== RECEIPT VIEWER MODAL ==================== -->
+    <div class="pv-modal-overlay" id="receipt-viewer-overlay" onclick="app.closeReceiptViewer(event)">
+        <div class="pv-modal pv-modal-lg" onclick="event.stopPropagation()">
+            <div class="pv-modal-header no-print">
+                <h3 class="pv-modal-title">Payment Receipt</h3>
+                <button class="pv-modal-close" onclick="app.closeReceiptViewer()">&times;</button>
+            </div>
+            <div class="pv-modal-body" id="receipt-viewer-body" style="padding:0; background:var(--bg-primary);">
+                <!-- Receipt viewer rendered here -->
+            </div>
+            <div class="pv-quotation-actions no-print" id="receipt-viewer-actions">
+                <button class="pv-btn pv-btn-gold" onclick="app.printReceipt(app._viewingReceiptPaymentId)">&#128424; Print Receipt</button>
+                <button class="pv-btn pv-btn-outline" onclick="app.closeReceiptViewer()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CREATE INVOICE MODAL ==================== -->
+    <div class="pv-modal-overlay" id="create-invoice-modal-overlay" onclick="app.closeCreateInvoiceModal(event)">
+        <div class="pv-modal" onclick="event.stopPropagation()">
+            <div class="pv-modal-header">
+                <h3 class="pv-modal-title">Create New Invoice</h3>
+                <button class="pv-modal-close" onclick="app.closeCreateInvoiceModal()">&times;</button>
+            </div>
+            <div class="pv-modal-body">
+                <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:16px;">Select a client to create a new blank invoice. You can add items from the catalog after creation.</p>
+                <div class="pv-form-group">
+                    <label class="pv-form-label">Select Client *</label>
+                    <select class="pv-select" id="create-invoice-client-select" style="width:100%;">
+                        <option value="">-- Select a client --</option>
+                    </select>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; margin:16px 0; color:var(--text-muted); font-size:0.85rem;">
+                    <span style="flex:1; height:1px; background:var(--border-subtle);"></span>
+                    <span>OR</span>
+                    <span style="flex:1; height:1px; background:var(--border-subtle);"></span>
+                </div>
+                <button class="pv-btn pv-btn-outline" onclick="app.closeCreateInvoiceModal(); app.switchTab('clients');">
+                    <span>+</span> Add New Client First
+                </button>
+            </div>
+            <div class="pv-modal-footer">
+                <button type="button" class="pv-btn pv-btn-outline" onclick="app.closeCreateInvoiceModal()">Cancel</button>
+                <button type="button" class="pv-btn pv-btn-gold" onclick="app.confirmCreateInvoice()">Create Invoice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="js/app-catalog-bridge.js"></script>
+    <script src="js/clients.js"></script>
+</body>
+</html>

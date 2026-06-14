@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parts Village - Admin Backoffice</title>
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- APP CONTENT -->
+<div id="app-content">
+
+    <!-- HEADER -->
+    <header class="admin-header">
+        <div class="admin-header-inner">
+            <a href="../index.html" class="admin-logo">
+                <div class="admin-logo-icon">PV</div>
+                <div>
+                    <div class="admin-logo-text">PARTS VILLAGE</div>
+                    <div class="admin-logo-sub">Admin Backoffice</div>
+                </div>
+            </a>
+            <div class="admin-header-actions">
+                <span id="admin-user-info" class="admin-user-info"></span>
+                <button class="btn-categories" onclick="PVAdmin.openCategoriesModal()">&#128451; Categories</button>
+                <button class="btn-add-new" onclick="PVAdmin.addNewItem()">+ Add New</button>
+                <button class="btn-export" onclick="PVAdmin.exportToJSON()">Export JSON</button>
+                <label class="btn-import">
+                    Import JSON
+                    <input type="file" accept=".json" onchange="PVAdmin.importFromJSON(this.files[0])" style="display:none;">
+                </label>
+                <button class="btn-logout" onclick="PVAdmin.logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- STATS -->
+    <div class="admin-stats">
+        <div class="admin-stat">
+            <div class="admin-stat-number" id="admin-stat-total">0</div>
+            <div class="admin-stat-label">Total Items</div>
+        </div>
+        <div class="admin-stat">
+            <div class="admin-stat-number" id="admin-stat-complete">0</div>
+            <div class="admin-stat-label">Complete</div>
+        </div>
+        <div class="admin-stat">
+            <div class="admin-stat-number" id="admin-stat-needs-image">0</div>
+            <div class="admin-stat-label">Needs Image</div>
+        </div>
+        <div class="admin-stat">
+            <div class="admin-stat-number" id="admin-stat-needs-verify">0</div>
+            <div class="admin-stat-label">Needs Verify</div>
+        </div>
+        <div class="admin-stat">
+            <div class="admin-stat-number" id="admin-stat-draft">0</div>
+            <div class="admin-stat-label">Draft</div>
+        </div>
+        <div class="admin-stat">
+            <div class="admin-stat-number" id="admin-stat-images">0</div>
+            <div class="admin-stat-label">With Images</div>
+        </div>
+    </div>
+
+    <!-- MISSING DATA WARNING -->
+    <div id="missing-data-warning" class="missing-data-warning" style="display:none;"></div>
+
+    <!-- SEARCH & FILTER -->
+    <div class="admin-filters">
+        <input type="text" id="admin-search" class="admin-search-input" placeholder="Search parts..." oninput="PVAdmin.search(this.value)">
+        <select id="admin-status-filter" class="admin-filter-select" onchange="PVAdmin.filterByStatus(this.value)">
+            <option value="all">All Status</option>
+            <option value="Complete">Complete</option>
+            <option value="Needs image">Needs Image</option>
+            <option value="Needs verification">Needs Verification</option>
+            <option value="Draft">Draft</option>
+        </select>
+    </div>
+
+    <!-- TABLE -->
+    <div class="admin-table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Item Code</th>
+                    <th>OEM Number</th>
+                    <th>Product Name</th>
+                    <th>Brand</th>
+                    <th>Category</th>
+                    <th>Machines</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="admin-table-body"></tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- EDIT MODAL -->
+<div id="edit-modal" class="edit-modal-overlay">
+    <div class="edit-modal">
+        <div class="edit-modal-header">
+            <h2 id="edit-modal-title">Edit Product</h2>
+            <button class="edit-modal-close" onclick="PVAdmin.closeEdit()">&#10005;</button>
+        </div>
+        <div class="edit-modal-body">
+            <!-- TABS -->
+            <div class="edit-tabs">
+                <button class="tab-btn active" data-tab="basic" onclick="PVAdmin.switchTab('basic')">Basic Info</button>
+                <button class="tab-btn" data-tab="machines" onclick="PVAdmin.switchTab('machines')">Machines</button>
+                <button class="tab-btn" data-tab="specs" onclick="PVAdmin.switchTab('specs')">Specs &amp; Dimensions</button>
+                <button class="tab-btn" data-tab="images" onclick="PVAdmin.switchTab('images')">Images</button>
+                <button class="tab-btn" data-tab="pricing" onclick="PVAdmin.switchTab('pricing')">Pricing</button>
+            </div>
+
+            <!-- TAB: BASIC -->
+            <div id="tab-basic" class="tab-content active">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Item Code <span class="required">*</span></label>
+                        <input type="text" id="edit-item-code" placeholder="Enter item code (e.g., A01-1)">
+                        <div class="field-error" id="item-code-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>OEM Part Number</label>
+                        <input type="text" id="edit-oem-number">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Name (EN)</label>
+                        <input type="text" id="edit-product-name-en">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Name (AR)</label>
+                        <input type="text" id="edit-product-name-ar">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Name (FR)</label>
+                        <input type="text" id="edit-product-name-fr">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Name (ZH)</label>
+                        <input type="text" id="edit-product-name-zh">
+                    </div>
+                    <div class="form-group">
+                        <label>Brand</label>
+                        <input type="text" id="edit-brand">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="edit-category">
+                            <option value="">-- Select Category --</option>
+                        </select>
+                        <button type="button" class="btn-link" onclick="PVAdmin.openCategoriesModal()">+ Manage Categories</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Engine</label>
+                        <input type="text" id="edit-engine">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="edit-status">
+                            <option value="Draft">Draft</option>
+                            <option value="Needs image">Needs Image</option>
+                            <option value="Needs verification">Needs Verification</option>
+                            <option value="Complete">Complete</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Verification Status</label>
+                        <select id="edit-verification">
+                            <option value="Pending">Pending</option>
+                            <option value="Verified">Verified</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Notes</label>
+                        <textarea id="edit-notes" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: MACHINES -->
+            <div id="tab-machines" class="tab-content">
+                <div class="form-group">
+                    <label>Compatible Machines</label>
+                    <div id="edit-machines-container"></div>
+                    <button type="button" class="btn-add" onclick="PVAdmin.addMachineField()">+ Add Machine</button>
+                </div>
+                <div class="form-group">
+                    <label>Alternative Part Numbers</label>
+                    <div id="edit-alt-numbers-container"></div>
+                    <button type="button" class="btn-add" onclick="PVAdmin.addAltNumberField()">+ Add Number</button>
+                </div>
+            </div>
+
+            <!-- TAB: SPECS -->
+            <div id="tab-specs" class="tab-content">
+                <div class="form-group">
+                    <label>Technical Specifications</label>
+                    <div id="edit-tech-specs-container"></div>
+                    <button type="button" class="btn-add" onclick="PVAdmin.addSpecField()">+ Add Spec</button>
+                </div>
+                <div class="form-group">
+                    <label>Sizes &amp; Dimensions</label>
+                    <div id="edit-dimensions-container"></div>
+                    <button type="button" class="btn-add" onclick="PVAdmin.addDimField()">+ Add Dimension</button>
+                </div>
+            </div>
+
+            <!-- TAB: IMAGES -->
+            <div id="tab-images" class="tab-content">
+                <!-- Main Image -->
+                <div class="form-group">
+                    <label>Main Image</label>
+                    <div id="edit-main-image-preview" class="main-image-preview"></div>
+                </div>
+
+                <!-- Extra Images Gallery -->
+                <div class="form-group">
+                    <label>All Images Gallery</label>
+                    <div id="edit-images-gallery" class="images-gallery"></div>
+                </div>
+
+                <!-- Upload New Image -->
+                <div class="form-group">
+                    <label>Upload New Image</label>
+                    <input type="file" id="edit-image-upload" accept="image/*" onchange="PVAdmin.handleExtraImageUpload(event)">
+                    <div class="upload-hint">Images are added to the gallery. Click "Set as Main" on any image to make it the primary image.</div>
+                </div>
+            </div>
+
+            <!-- TAB: PRICING -->
+            <div id="tab-pricing" class="tab-content">
+                <!-- Exchange Rate Display -->
+                <div class="exchange-rate-bar">
+                    <span>&#128176; Exchange Rate:</span>
+                    <strong id="exchange-rate-display">1 USD = 7.25 RMB</strong>
+                    <button class="btn-link" onclick="PVAdmin.fetchExchangeRate()">&#128260; Refresh Rate</button>
+                </div>
+
+                <!-- Cost Prices Section -->
+                <div class="pricing-section">
+                    <div class="pricing-section-header">
+                        <h3>&#128176; Cost Prices (Supplier)</h3>
+                        <span class="pricing-hint">Enter price in USD or RMB - both will be calculated automatically</span>
+                    </div>
+                    <div id="cost-prices-container" class="pricing-container"></div>
+                    <button type="button" class="btn-add" onclick="PVAdmin.addCostPriceField()">+ Add Cost Price</button>
+                </div>
+
+                <!-- Selling Prices Section -->
+                <div class="pricing-section">
+                    <div class="pricing-section-header">
+                        <h3>&#128185; Selling Prices</h3>
+                        <span class="pricing-hint">Add different selling prices for different quality grades</span>
+                    </div>
+                    <div id="selling-prices-container" class="pricing-container"></div>
+                    <button type="button" class="btn-add" onclick="PVAdmin.addSellingPriceField()">+ Add Selling Price</button>
+                </div>
+            </div>
+        </div>
+        <div class="edit-modal-footer">
+            <button class="btn-cancel" onclick="PVAdmin.closeEdit()">Cancel</button>
+            <button class="btn-save" id="edit-save-btn" onclick="PVAdmin.saveItem()">Save Changes</button>
+        </div>
+    </div>
+</div>
+
+<!-- CATEGORIES MODAL -->
+<div id="categories-modal" class="edit-modal-overlay">
+    <div class="edit-modal">
+        <div class="edit-modal-header">
+            <h2>&#128451; Manage Categories</h2>
+            <button class="edit-modal-close" onclick="PVAdmin.closeCategoriesModal()">&#10005;</button>
+        </div>
+        <div class="edit-modal-body">
+            <!-- Add/Edit Category Form -->
+            <div class="form-group" style="margin-bottom:20px;">
+                <label>Category Name</label>
+                <input type="text" id="category-name-input" placeholder="Enter category name">
+            </div>
+            <div class="form-group" style="margin-bottom:20px;">
+                <label>Category Image</label>
+                <div id="category-image-preview" class="category-image-preview">
+                    <div class="no-image">No image</div>
+                </div>
+                <input type="file" id="category-image-upload" accept="image/*" onchange="PVAdmin.handleCategoryImageUpload(event)" style="margin-top:8px;">
+            </div>
+            <div style="display:flex;gap:12px;margin-bottom:24px;">
+                <button class="btn-save" onclick="PVAdmin.saveCategory()" id="category-save-btn">Add Category</button>
+                <button class="btn-cancel" onclick="PVAdmin.cancelCategoryEdit()" id="category-cancel-btn" style="display:none;">Cancel</button>
+            </div>
+
+            <!-- Categories List -->
+            <label>Existing Categories</label>
+            <div id="categories-list" class="categories-list"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Supabase CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<!-- Environment Config -->
+<script>
+window.ENV = {
+    SUPABASE_URL: 'https://ljmvpmnwjvlxgjixsxxo.supabase.co',
+    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqbXZwbW53anZseGdqaXhzeHhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTE3NzgsImV4cCI6MjA5NjU4Nzc3OH0.ioUHZlEfoGEhke26ZHGTWFZkycffkml4mLWmKj5V3sI'
+};
+</script>
+<!-- Supabase Client -->
+<script src="../js/supabase-client.js"></script>
+<!-- Admin App -->
+<script src="js/admin.js"></script>
+</body>
+</html>
