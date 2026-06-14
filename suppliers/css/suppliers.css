@@ -9,10 +9,10 @@
     --bg-input: #1a1a1a;
     --border-subtle: #2a2a2a;
     --border-medium: #3a3a3a;
-    --gold: #d4af37;
-    --gold-light: #e8c547;
-    --gold-dark: #b8960c;
-    --gold-muted: rgba(212, 175, 55, 0.15);
+    --silver: #c0c0c0;
+    --silver-light: #d8d8d8;
+    --silver-dark: #808080;
+    --silver-muted: rgba(192, 192, 192, 0.15);
     --text-primary: #e8e8e8;
     --text-secondary: #a0a0a0;
     --text-muted: #666666;
@@ -26,7 +26,7 @@
     --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
     --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
     --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
-    --shadow-gold: 0 4px 20px rgba(212, 175, 55, 0.15);
+    --shadow-silver: 0 4px 20px rgba(192, 192, 192, 0.15);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -78,29 +78,40 @@ body {
     gap: 20px;
 }
 
-.pv-logo-link {
-    text-decoration: none;
-    color: inherit;
-}
-
 .pv-logo {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
 }
 
-.pv-logo-brand {
-    font-size: 1.3em;
-    font-weight: 800;
-    color: var(--gold);
-    letter-spacing: 1.5px;
+.pv-logo-full {
+    height: 110px;
+    width: auto;
+    max-width: 420px;
+    flex-shrink: 0;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+    filter: brightness(1.1) contrast(1.05);
+    transition: filter 0.3s ease;
+}
+.pv-logo:hover .pv-logo-full {
+    filter: brightness(1.2) contrast(1.1);
 }
 
-.pv-logo-subtitle {
-    font-size: 0.75em;
-    color: var(--text-muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
+.pv-logo-compact {
+    height: 48px;
+    width: 48px;
+    flex-shrink: 0;
+    object-fit: contain;
+    display: none;
+    filter: brightness(1.1) contrast(1.05);
+}
+
+@media (max-width: 768px) {
+    .pv-logo-full { display: none; }
+    .pv-logo-compact { display: block; }
 }
 
 .pv-back-link {
@@ -118,8 +129,8 @@ body {
 }
 
 .pv-back-link:hover {
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: var(--silver);
+    color: var(--silver);
 }
 
 .pv-settings-btn {
@@ -138,8 +149,8 @@ body {
 }
 
 .pv-settings-btn:hover {
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: var(--silver);
+    color: var(--silver);
 }
 
 /* ============================================
@@ -177,14 +188,14 @@ body {
 }
 
 .pv-tab-btn.active {
-    color: var(--gold);
-    border-bottom-color: var(--gold);
+    color: var(--silver);
+    border-bottom-color: var(--silver);
     background: var(--bg-elevated);
 }
 
 .pv-tab-badge {
-    background: var(--gold-muted);
-    color: var(--gold);
+    background: var(--silver-muted);
+    color: var(--silver);
     font-size: 0.75em;
     padding: 2px 8px;
     border-radius: 10px;
@@ -230,7 +241,7 @@ body {
 .pv-section-title {
     font-size: 1.3em;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--silver);
 }
 
 /* ============================================
@@ -252,15 +263,15 @@ body {
     text-decoration: none;
 }
 
-.pv-btn-gold {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+.pv-btn-silver {
+    background: linear-gradient(135deg, var(--silver), var(--silver-dark));
     color: #000;
 }
 
-.pv-btn-gold:hover {
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+.pv-btn-silver:hover {
+    background: linear-gradient(135deg, var(--silver-light), var(--silver));
     transform: translateY(-1px);
-    box-shadow: var(--shadow-gold);
+    box-shadow: var(--shadow-silver);
 }
 
 .pv-btn-outline {
@@ -270,8 +281,8 @@ body {
 }
 
 .pv-btn-outline:hover {
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: var(--silver);
+    color: var(--silver);
 }
 
 .pv-btn-danger {
@@ -314,8 +325,8 @@ body {
 
 .pv-search-input:focus {
     outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px var(--gold-muted);
+    border-color: var(--silver);
+    box-shadow: 0 0 0 3px var(--silver-muted);
 }
 
 .pv-search-input::placeholder {
@@ -374,8 +385,8 @@ body {
 .pv-select:focus,
 .pv-form-textarea:focus {
     outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px var(--gold-muted);
+    border-color: var(--silver);
+    box-shadow: 0 0 0 3px var(--silver-muted);
 }
 
 .pv-form-textarea {
@@ -417,7 +428,7 @@ body {
 
 .pv-supplier-card:hover {
     transform: translateY(-2px);
-    border-color: var(--gold);
+    border-color: var(--silver);
     box-shadow: var(--shadow-md);
 }
 
@@ -428,7 +439,7 @@ body {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+    background: linear-gradient(90deg, var(--silver), var(--silver-dark));
     opacity: 0;
     transition: var(--transition);
 }
@@ -452,14 +463,14 @@ body {
 
 .pv-supplier-card-company {
     font-size: 0.85em;
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 600;
     margin-top: 2px;
 }
 
 .pv-supplier-card-code {
-    background: var(--gold-muted);
-    color: var(--gold);
+    background: var(--silver-muted);
+    color: var(--silver);
     font-size: 0.75em;
     font-weight: 700;
     padding: 4px 10px;
@@ -514,7 +525,7 @@ body {
 }
 
 .pv-supplier-card-inquiries-count {
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 700;
 }
 
@@ -555,10 +566,10 @@ body {
 }
 
 .step-circle.active {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    border-color: var(--gold);
+    background: linear-gradient(135deg, var(--silver), var(--silver-dark));
+    border-color: var(--silver);
     color: #000;
-    box-shadow: var(--shadow-gold);
+    box-shadow: var(--shadow-silver);
 }
 
 .step-circle.completed {
@@ -575,7 +586,7 @@ body {
 }
 
 .pv-step-indicator.active .step-label {
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 600;
 }
 
@@ -631,7 +642,7 @@ body {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    background: linear-gradient(135deg, var(--silver), var(--silver-dark));
     color: #000;
     display: flex;
     align-items: center;
@@ -697,7 +708,7 @@ body {
 
 .pv-inquiry-sidebar-footer {
     padding: 16px;
-    border-top: 2px solid var(--gold-muted);
+    border-top: 2px solid var(--silver-muted);
     background: var(--bg-input);
 }
 
@@ -788,7 +799,7 @@ body {
 .pv-catalog-item-code {
     font-family: 'Courier New', monospace;
     font-size: 0.8em;
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 700;
 }
 
@@ -828,7 +839,7 @@ body {
 
 .pv-btn-add {
     padding: 6px 12px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    background: linear-gradient(135deg, var(--silver), var(--silver-dark));
     color: #000;
     border: none;
     border-radius: var(--radius-sm);
@@ -841,7 +852,7 @@ body {
 
 .pv-btn-add:hover {
     transform: scale(1.05);
-    box-shadow: var(--shadow-gold);
+    box-shadow: var(--shadow-silver);
 }
 
 .pv-btn-add:disabled {
@@ -893,7 +904,7 @@ body {
 .pv-cart-item-code {
     font-family: 'Courier New', monospace;
     font-size: 0.75em;
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 700;
 }
 
@@ -936,7 +947,7 @@ body {
 
 .pv-cart-item-total {
     font-size: 0.8em;
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 700;
     min-width: 50px;
     text-align: right;
@@ -993,7 +1004,7 @@ body {
 }
 
 .pv-cart-grand-total span:last-child {
-    color: var(--gold);
+    color: var(--silver);
     font-size: 1.15em;
 }
 
@@ -1029,7 +1040,7 @@ body {
 .pv-data-table th {
     padding: 14px 16px;
     text-align: left;
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 600;
     font-size: 0.8em;
     text-transform: uppercase;
@@ -1051,7 +1062,7 @@ body {
 }
 
 .pv-data-table tbody tr:hover {
-    background: rgba(212, 175, 55, 0.05);
+    background: rgba(192, 192, 192, 0.05);
 }
 
 .pv-data-table tbody tr:last-child td {
@@ -1075,7 +1086,7 @@ body {
 .pv-badge-draft { background: rgba(158, 158, 158, 0.15); color: var(--text-muted); }
 .pv-badge-sent { background: rgba(33, 150, 243, 0.15); color: var(--info); }
 .pv-badge-responded { background: rgba(76, 175, 80, 0.15); color: var(--success); }
-.pv-badge-ordered { background: rgba(212, 175, 55, 0.2); color: var(--gold); }
+.pv-badge-ordered { background: rgba(192, 192, 192, 0.2); color: var(--silver); }
 .pv-badge-closed { background: rgba(96, 96, 96, 0.2); color: var(--text-muted); text-decoration: line-through; }
 
 /* ============================================
@@ -1095,7 +1106,7 @@ body {
 
 .pv-status-select:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--silver);
 }
 
 /* ============================================
@@ -1159,7 +1170,7 @@ body {
 .pv-modal-title {
     font-size: 1.2em;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--silver);
 }
 
 .pv-modal-close {
@@ -1229,7 +1240,7 @@ body {
     align-items: flex-start;
     margin-bottom: 32px;
     padding-bottom: 24px;
-    border-bottom: 3px solid #d4af37;
+    border-bottom: 3px solid #c0c0c0;
 }
 
 .doc-logo {
@@ -1256,7 +1267,7 @@ body {
 }
 
 .pv-inquiry-doc-meta strong {
-    color: #d4af37;
+    color: #c0c0c0;
 }
 
 .pv-inquiry-doc-parties {
@@ -1291,7 +1302,7 @@ body {
 
 .pv-inquiry-doc-party-company {
     font-size: 0.9em;
-    color: #d4af37;
+    color: #c0c0c0;
     font-weight: 600;
     margin-bottom: 8px;
 }
@@ -1308,7 +1319,7 @@ body {
     color: #1a1a1a;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #d4af37;
+    border-bottom: 2px solid #c0c0c0;
 }
 
 .pv-inquiry-doc-table {
@@ -1327,7 +1338,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: #555;
-    border-bottom: 2px solid #d4af37;
+    border-bottom: 2px solid #c0c0c0;
 }
 
 .pv-inquiry-doc-table td {
@@ -1341,7 +1352,7 @@ body {
 }
 
 .pv-inquiry-doc-table .col-num { width: 30px; text-align: center; }
-.pv-inquiry-doc-table .col-code { font-family: 'Courier New', monospace; font-weight: 600; color: #d4af37; }
+.pv-inquiry-doc-table .col-code { font-family: 'Courier New', monospace; font-weight: 600; color: #c0c0c0; }
 .pv-inquiry-doc-table .col-partno { font-family: 'Courier New', monospace; font-size: 0.9em; }
 .pv-inquiry-doc-table .col-qty { width: 50px; text-align: center; font-weight: 700; }
 .pv-inquiry-doc-table .col-price { width: 100px; text-align: right; font-weight: 600; }
@@ -1369,7 +1380,7 @@ body {
 }
 
 .pv-inquiry-doc-summary-row.total {
-    border-top: 2px solid #d4af37;
+    border-top: 2px solid #c0c0c0;
     margin-top: 8px;
     padding-top: 10px;
     font-size: 1.1em;
@@ -1442,8 +1453,8 @@ body {
 }
 
 .pv-action-btn-print:hover {
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: var(--silver);
+    color: var(--silver);
 }
 
 .pv-action-btn-whatsapp {
@@ -1467,12 +1478,12 @@ body {
 }
 
 .pv-action-btn-status {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    background: linear-gradient(135deg, var(--silver), var(--silver-dark));
     color: #000;
 }
 
 .pv-action-btn-status:hover {
-    box-shadow: var(--shadow-gold);
+    box-shadow: var(--shadow-silver);
     transform: translateY(-1px);
 }
 
@@ -1493,7 +1504,7 @@ body {
     width: 64px;
     height: 64px;
     border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    background: linear-gradient(135deg, var(--silver), var(--silver-dark));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1514,7 +1525,7 @@ body {
 
 .pv-supplier-detail-company {
     font-size: 1em;
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 600;
     margin-bottom: 8px;
 }
@@ -1542,7 +1553,7 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--gold);
+    color: var(--silver);
     margin-bottom: 10px;
 }
 
@@ -1596,7 +1607,7 @@ body {
 }
 
 .pv-supplier-detail-inquiry-item:hover {
-    border-color: var(--gold);
+    border-color: var(--silver);
 }
 
 /* ============================================
@@ -1655,8 +1666,8 @@ body {
 }
 
 .pv-cart-count {
-    background: var(--gold-muted);
-    color: var(--gold);
+    background: var(--silver-muted);
+    color: var(--silver);
     font-size: 0.8em;
     padding: 2px 8px;
     border-radius: 10px;
@@ -1712,12 +1723,12 @@ body {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    background: linear-gradient(135deg, var(--silver), var(--silver-dark));
     border: none;
     color: #000;
     font-size: 1.4em;
     cursor: pointer;
-    box-shadow: var(--shadow-gold);
+    box-shadow: var(--shadow-silver);
     transition: var(--transition);
     position: relative;
     display: flex;
@@ -1836,7 +1847,7 @@ body {
 .pv-empty-state-title {
     font-size: 1.3em;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--silver);
     margin-bottom: 8px;
 }
 
@@ -1890,7 +1901,7 @@ body {
 }
 
 .pv-confirm-box h3 {
-    color: var(--gold);
+    color: var(--silver);
     margin-bottom: 12px;
     font-size: 1.2em;
 }
@@ -1914,7 +1925,7 @@ body {
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+::-webkit-scrollbar-thumb:hover { background: var(--silver); }
 
 /* ============================================
    PRINT STYLES

@@ -365,7 +365,7 @@ const PVClientsApp = {
         html += `
             <div style="display:flex; justify-content:space-between; align-items:center; margin:20px 0 12px;">
                 <span class="pv-detail-label">Quotations (${quotations.length})</span>
-                <button class="pv-btn pv-btn-gold pv-btn-sm" onclick="app.startQuotationForClient('${id}')">+ New Quotation</button>
+                <button class="pv-btn pv-btn-silver pv-btn-sm" onclick="app.startQuotationForClient('${id}')">+ New Quotation</button>
             </div>
             <div class="pv-client-quotations-list">
         `;
@@ -394,7 +394,7 @@ const PVClientsApp = {
         html += `
             <div style="display:flex; justify-content:space-between; align-items:center; margin:24px 0 12px;">
                 <span class="pv-detail-label">Invoices (${invoices.length})</span>
-                <button class="pv-btn pv-btn-gold pv-btn-sm" onclick="app.startInvoiceForClient('${id}')">+ New Invoice</button>
+                <button class="pv-btn pv-btn-silver pv-btn-sm" onclick="app.startInvoiceForClient('${id}')">+ New Invoice</button>
             </div>
             <div class="pv-client-invoices-list">
         `;
@@ -570,7 +570,7 @@ const PVClientsApp = {
                     <div class="pv-catalog-card-name" title="${this.escapeHtml(item.product_name_en)}">${this.escapeHtml(item.product_name_en)}</div>
                     <div class="pv-catalog-card-oem">${this.escapeHtml(item.oem_part_number || '')}</div>
                     <div class="pv-catalog-card-price">${currency}${this.formatNumber(item.list_price || 0)}</div>
-                    <button class="pv-btn pv-btn-gold pv-btn-sm" onclick="app.addToCart('${item.item_code}')" ${inCart ? 'disabled' : ''}>
+                    <button class="pv-btn pv-btn-silver pv-btn-sm" onclick="app.addToCart('${item.item_code}')" ${inCart ? 'disabled' : ''}>
                         ${inCart ? '&#10003; Added' : '+ Add to Quotation'}
                     </button>
                 </div>
@@ -1055,7 +1055,7 @@ const PVClientsApp = {
                 </select>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
-                <button class="pv-btn pv-btn-gold" onclick="app.printQuotation('${quotation.id}')">
+                <button class="pv-btn pv-btn-silver" onclick="app.printQuotation('${quotation.id}')">
                     &#128424; Print / PDF
                 </button>
                 <button class="pv-btn pv-btn-success" onclick="app.shareWhatsApp('${quotation.id}')">
@@ -1570,7 +1570,7 @@ const PVClientsApp = {
             <div class="pv-invoice-viewer" id="printable-invoice">
                 <div class="pv-invoice-viewer-header">
                     <div class="pv-invoice-viewer-company">
-                        <img src="../images/logo.png" class="doc-logo" onerror="this.style.display='none'; this.parentNode.insertAdjacentHTML('afterbegin', '<div class=\\'pv-quotation-viewer-logo\\'>PARTS<br>VILLAGE</div>');" alt="">
+                        <img src="../images/logo-wordmark-dark.png" class="doc-logo" onerror="this.style.display='none'; this.parentNode.insertAdjacentHTML('afterbegin', '<div class=\\'pv-quotation-viewer-logo\\'>PARTS<br>VILLAGE</div>');" alt="">
                         <div>
                             <h2>${this.escapeHtml(settings.company_name || 'Parts Village')}</h2>
                             ${settings.phone ? `<p>&#128222; ${this.escapeHtml(settings.phone)}</p>` : ''}
@@ -1714,7 +1714,7 @@ const PVClientsApp = {
                     &#128441; Latest Receipt
                 </button>
                 ` : ''}
-                <button class="pv-btn pv-btn-gold" onclick="app.printInvoice('${invoice.id}')">
+                <button class="pv-btn pv-btn-silver" onclick="app.printInvoice('${invoice.id}')">
                     &#128424; Print / PDF
                 </button>
                 <button class="pv-btn pv-btn-success" onclick="app.shareInvoiceWhatsApp('${invoice.id}')">
@@ -1749,7 +1749,7 @@ const PVClientsApp = {
                     <div class="pv-invoice-catalog-code">${this.escapeHtml(item.item_code)}</div>
                     <div class="pv-invoice-catalog-name" title="${this.escapeHtml(item.product_name_en)}">${this.escapeHtml(item.product_name_en)}</div>
                     <div class="pv-invoice-catalog-price">${currency}${this.formatNumber(item.list_price || 0)}</div>
-                    <button class="pv-btn pv-btn-gold pv-btn-sm" onclick="app.addItemToInvoice('${invoiceId}', '${item.item_code}')" ${inInvoice ? 'disabled' : ''}>
+                    <button class="pv-btn pv-btn-silver pv-btn-sm" onclick="app.addItemToInvoice('${invoiceId}', '${item.item_code}')" ${inInvoice ? 'disabled' : ''}>
                         ${inInvoice ? '&#10003; Added' : '+ Add'}
                     </button>
                 </div>
@@ -1786,7 +1786,7 @@ const PVClientsApp = {
                     <div class="pv-invoice-catalog-code">${this.escapeHtml(item.item_code)}</div>
                     <div class="pv-invoice-catalog-name" title="${this.escapeHtml(item.product_name_en)}">${this.escapeHtml(item.product_name_en)}</div>
                     <div class="pv-invoice-catalog-price">${currency}${this.formatNumber(item.list_price || 0)}</div>
-                    <button class="pv-btn pv-btn-gold pv-btn-sm" onclick="app.addItemToInvoice('${invoiceId}', '${item.item_code}')" ${inInvoice ? 'disabled' : ''}>
+                    <button class="pv-btn pv-btn-silver pv-btn-sm" onclick="app.addItemToInvoice('${invoiceId}', '${item.item_code}')" ${inInvoice ? 'disabled' : ''}>
                         ${inInvoice ? '&#10003; Added' : '+ Add'}
                     </button>
                 </div>
@@ -1855,7 +1855,7 @@ const PVClientsApp = {
         const actions = document.querySelector('#receipt-viewer-overlay .pv-quotation-actions');
         if (actions) {
             actions.innerHTML = `
-                <button class="pv-btn pv-btn-gold" onclick="app.printReceipt('${paymentId}')">&#128424; Print Receipt</button>
+                <button class="pv-btn pv-btn-silver" onclick="app.printReceipt('${paymentId}')">&#128424; Print Receipt</button>
                 <button class="pv-btn pv-btn-outline" onclick="app.closeReceiptViewer()">Close</button>
             `;
         }
@@ -1882,7 +1882,7 @@ const PVClientsApp = {
         return `
             <div class="pv-receipt-viewer" id="printable-receipt">
                 <div class="pv-receipt-header">
-                    <img src="../images/logo.png" class="doc-logo" onerror="this.style.display='none'; this.parentNode.insertAdjacentHTML('afterbegin', '<div style=\\'display:flex; align-items:center; gap:12px;\\'><div class=\\'pv-quotation-viewer-logo\\'>PARTS<br>VILLAGE</div></div>');" alt="">
+                    <img src="../images/logo-wordmark-dark.png" class="doc-logo" onerror="this.style.display='none'; this.parentNode.insertAdjacentHTML('afterbegin', '<div style=\\'display:flex; align-items:center; gap:12px;\\'><div class=\\'pv-quotation-viewer-logo\\'>PARTS<br>VILLAGE</div></div>');" alt="">
                     <div>
                         <h2>${this.escapeHtml(settings.company_name || 'Parts Village')}</h2>
                         ${settings.phone ? `<p>&#128222; ${this.escapeHtml(settings.phone)}</p>` : ''}
@@ -2024,9 +2024,9 @@ const PVClientsApp = {
                 <style>
                     * { margin:0; padding:0; box-sizing:border-box; }
                     body { font-family:'Segoe UI',Arial,sans-serif; padding:30px; color:#000; background:#fff; }
-                    .header { display:flex; justify-content:space-between; border-bottom:3px solid #d4af37; padding-bottom:20px; margin-bottom:30px; }
+                    .header { display:flex; justify-content:space-between; border-bottom:3px solid #c0c0c0; padding-bottom:20px; margin-bottom:30px; }
                     .header-left { display:flex; align-items:center; gap:16px; }
-                    .logo { width:60px; height:60px; background:#d4af37; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:800; text-align:center; color:#0a0a0a; }
+                    .logo { width:60px; height:60px; background:#c0c0c0; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:800; text-align:center; color:#0a0a0a; }
                     .header-left h1 { font-size:1.4rem; letter-spacing:2px; text-transform:uppercase; }
                     .header-left p { font-size:0.8rem; color:#555; margin-top:2px; }
                     .header-right { text-align:right; }
@@ -2150,24 +2150,24 @@ const PVClientsApp = {
                 <style>
                     * { margin:0; padding:0; box-sizing:border-box; }
                     body { font-family:'Segoe UI',Arial,sans-serif; padding:30px; color:#000; background:#fff; display:flex; justify-content:center; }
-                    .receipt { max-width:500px; width:100%; border:2px solid #d4af37; border-radius:12px; padding:40px; }
-                    .header { text-align:center; margin-bottom:30px; padding-bottom:20px; border-bottom:2px solid #d4af37; }
-                    .logo { width:60px; height:60px; background:#d4af37; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:800; text-align:center; color:#0a0a0a; margin:0 auto 12px; }
+                    .receipt { max-width:500px; width:100%; border:2px solid #c0c0c0; border-radius:12px; padding:40px; }
+                    .header { text-align:center; margin-bottom:30px; padding-bottom:20px; border-bottom:2px solid #c0c0c0; }
+                    .logo { width:60px; height:60px; background:#c0c0c0; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:800; text-align:center; color:#0a0a0a; margin:0 auto 12px; }
                     .header h1 { font-size:1.3rem; letter-spacing:2px; text-transform:uppercase; }
                     .header p { font-size:0.8rem; color:#555; margin-top:2px; }
-                    .title { text-align:center; font-size:1.8rem; font-weight:700; color:#d4af37; margin:20px 0; letter-spacing:3px; }
+                    .title { text-align:center; font-size:1.8rem; font-weight:700; color:#c0c0c0; margin:20px 0; letter-spacing:3px; }
                     .meta { margin-bottom:20px; }
                     .meta-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #e0e0e0; font-size:0.85rem; }
                     .meta-row .label { font-weight:700; color:#333; }
                     .from { background:#f8f8f8; border:1px solid #e0e0e0; padding:16px; border-radius:6px; margin-bottom:20px; }
                     .from p { margin-bottom:2px; font-size:0.85rem; color:#444; }
-                    .amount { text-align:center; padding:30px; background:#f8f8f8; border:2px solid #d4af37; border-radius:8px; margin:20px 0; }
+                    .amount { text-align:center; padding:30px; background:#f8f8f8; border:2px solid #c0c0c0; border-radius:8px; margin:20px 0; }
                     .amount-label { font-size:0.8rem; text-transform:uppercase; letter-spacing:2px; color:#888; margin-bottom:8px; }
                     .amount-value { font-size:2.5rem; font-weight:700; color:#0a0a0a; }
                     .balance { margin:20px 0; }
                     .balance-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #e0e0e0; font-size:0.85rem; }
                     .balance-row:last-child { font-weight:700; font-size:1rem; border-top:2px solid #333; border-bottom:2px solid #333; }
-                    .thanks { text-align:center; font-size:1.1rem; color:#d4af37; font-weight:600; margin:30px 0 20px; }
+                    .thanks { text-align:center; font-size:1.1rem; color:#c0c0c0; font-weight:600; margin:30px 0 20px; }
                     .footer { text-align:center; font-size:0.75rem; color:#888; padding-top:20px; border-top:1px solid #e0e0e0; }
                     @media print { body { padding:15px; } .receipt { border:none; } }
                 </style>
@@ -2470,9 +2470,9 @@ const PVClientsApp = {
                 <style>
                     * { margin:0; padding:0; box-sizing:border-box; }
                     body { font-family:'Segoe UI',Arial,sans-serif; padding:30px; color:#000; background:#fff; }
-                    .header { display:flex; justify-content:space-between; border-bottom:3px solid #d4af37; padding-bottom:20px; margin-bottom:30px; }
+                    .header { display:flex; justify-content:space-between; border-bottom:3px solid #c0c0c0; padding-bottom:20px; margin-bottom:30px; }
                     .header-left { display:flex; align-items:center; gap:16px; }
-                    .logo { width:60px; height:60px; background:#d4af37; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:800; text-align:center; color:#0a0a0a; }
+                    .logo { width:60px; height:60px; background:#c0c0c0; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:800; text-align:center; color:#0a0a0a; }
                     .header-left h1 { font-size:1.4rem; letter-spacing:2px; text-transform:uppercase; }
                     .header-left p { font-size:0.8rem; color:#555; margin-top:2px; }
                     .header-right { text-align:right; }
@@ -2722,7 +2722,7 @@ const PVClientsApp = {
                             <span>${qCount}</span> quote${qCount !== 1 ? 's' : ''} &middot; <span>${iCount}</span> inv${iCount !== 1 ? 's' : ''}
                             ${balance > 0 ? `<div style="color:var(--danger); font-size:0.75rem; margin-top:2px;">Bal: ${currency}${this.formatNumber(balance)}</div>` : ''}
                         </div>
-                        <button class="pv-btn pv-btn-gold pv-btn-sm" onclick="app.startQuotationForClient('${client.id}'); event.stopPropagation();">
+                        <button class="pv-btn pv-btn-silver pv-btn-sm" onclick="app.startQuotationForClient('${client.id}'); event.stopPropagation();">
                             + Quote
                         </button>
                     </div>

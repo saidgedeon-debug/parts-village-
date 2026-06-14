@@ -12,15 +12,15 @@
     --bg-input: #111111;
     --border-subtle: #2a2a2a;
     --border-default: #3a3a3a;
-    --border-focus: #d4af37;
-    --gold: #d4af37;
-    --gold-light: #e8c94f;
-    --gold-dark: #b8932a;
-    --gold-muted: #8a7020;
+    --border-focus: #c0c0c0;
+    --silver: #c0c0c0;
+    --silver-light: #d8d8d8;
+    --silver-dark: #808080;
+    --silver-muted: #8a7020;
     --text-primary: #e0e0e0;
     --text-secondary: #888888;
     --text-muted: #555555;
-    --text-on-gold: #0a0a0a;
+    --text-on-silver: #0a0a0a;
     --success: #4caf50;
     --success-bg: #1a3a1a;
     --warning: #ff9800;
@@ -57,18 +57,18 @@ body {
 }
 
 a {
-    color: var(--gold);
+    color: var(--silver);
     text-decoration: none;
 }
 
 a:hover {
-    color: var(--gold-light);
+    color: var(--silver-light);
 }
 
 /* ---------- Header ---------- */
 .pv-header {
     background: var(--bg-surface);
-    border-bottom: 2px solid var(--gold-muted);
+    border-bottom: 2px solid var(--silver-muted);
     padding: 16px 24px;
     display: flex;
     align-items: center;
@@ -88,22 +88,38 @@ a:hover {
 
 .pv-logo {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
 }
 
-.pv-logo-brand {
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: 3px;
-    color: var(--gold);
-    text-transform: uppercase;
-    line-height: 1.2;
+.pv-logo-full {
+    height: 110px;
+    width: auto;
+    max-width: 420px;
+    flex-shrink: 0;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+    filter: brightness(1.1) contrast(1.05);
+    transition: filter 0.3s ease;
+}
+.pv-logo:hover .pv-logo-full {
+    filter: brightness(1.2) contrast(1.1);
 }
 
-.pv-logo-subtitle {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    letter-spacing: 1px;
+.pv-logo-compact {
+    height: 48px;
+    width: 48px;
+    flex-shrink: 0;
+    object-fit: contain;
+    display: none;
+    filter: brightness(1.1) contrast(1.05);
+}
+
+@media (max-width: 768px) {
+    .pv-logo-full { display: none; }
+    .pv-logo-compact { display: block; }
 }
 
 .pv-back-link {
@@ -119,8 +135,8 @@ a:hover {
 }
 
 .pv-back-link:hover {
-    color: var(--gold);
-    border-color: var(--gold-muted);
+    color: var(--silver);
+    border-color: var(--silver-muted);
     background: var(--bg-surface-hover);
 }
 
@@ -140,8 +156,8 @@ a:hover {
 }
 
 .pv-settings-btn:hover {
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: var(--silver);
+    color: var(--silver);
 }
 
 /* ---------- Tab Navigation ---------- */
@@ -173,13 +189,13 @@ a:hover {
 }
 
 .pv-tab-btn.active {
-    color: var(--gold);
-    border-bottom-color: var(--gold);
+    color: var(--silver);
+    border-bottom-color: var(--silver);
 }
 
 .pv-tab-badge {
-    background: var(--gold);
-    color: var(--text-on-gold);
+    background: var(--silver);
+    color: var(--text-on-silver);
     font-size: 0.65rem;
     padding: 1px 6px;
     border-radius: 10px;
@@ -236,15 +252,15 @@ a:hover {
     gap: 8px;
 }
 
-.pv-btn-gold {
-    background: var(--gold);
-    color: var(--text-on-gold);
+.pv-btn-silver {
+    background: var(--silver);
+    color: var(--text-on-silver);
 }
 
-.pv-btn-gold:hover {
-    background: var(--gold-light);
+.pv-btn-silver:hover {
+    background: var(--silver-light);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+    box-shadow: 0 4px 12px rgba(192,192,192,0.3);
 }
 
 .pv-btn-outline {
@@ -254,8 +270,8 @@ a:hover {
 }
 
 .pv-btn-outline:hover {
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: var(--silver);
+    color: var(--silver);
 }
 
 .pv-btn-ghost {
@@ -329,7 +345,7 @@ a:hover {
 
 .pv-search-input:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--silver);
 }
 
 .pv-search-input::placeholder {
@@ -349,7 +365,7 @@ a:hover {
 
 .pv-select:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--silver);
 }
 
 /* ---------- Client Cards Grid ---------- */
@@ -370,7 +386,7 @@ a:hover {
 }
 
 .pv-client-card:hover {
-    border-color: var(--gold-muted);
+    border-color: var(--silver-muted);
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -386,8 +402,8 @@ a:hover {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--gold-muted);
-    color: var(--gold);
+    background: var(--silver-muted);
+    color: var(--silver);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -422,8 +438,8 @@ a:hover {
 }
 
 .pv-action-btn:hover {
-    background: var(--gold);
-    color: var(--text-on-gold);
+    background: var(--silver);
+    color: var(--text-on-silver);
 }
 
 .pv-action-btn.danger:hover {
@@ -440,7 +456,7 @@ a:hover {
 
 .pv-client-company {
     font-size: 0.8rem;
-    color: var(--gold);
+    color: var(--silver);
     margin-bottom: 10px;
 }
 
@@ -473,7 +489,7 @@ a:hover {
 }
 
 .pv-client-quotations-count span {
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 700;
 }
 
@@ -632,7 +648,7 @@ a:hover {
 .pv-form-input:focus,
 .pv-form-textarea:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--silver);
 }
 
 .pv-form-textarea {
@@ -654,8 +670,8 @@ a:hover {
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: var(--gold-muted);
-    color: var(--gold);
+    background: var(--silver-muted);
+    color: var(--silver);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -728,12 +744,12 @@ a:hover {
 }
 
 .pv-mini-quotation-card:hover {
-    border-color: var(--gold-muted);
+    border-color: var(--silver-muted);
 }
 
 .pv-mini-quotation-id {
     font-weight: 700;
-    color: var(--gold);
+    color: var(--silver);
     font-size: 0.85rem;
 }
 
@@ -863,7 +879,7 @@ a:hover {
 
 .pv-data-table .col-number {
     font-weight: 700;
-    color: var(--gold);
+    color: var(--silver);
 }
 
 .pv-data-table .col-amount {
@@ -991,12 +1007,12 @@ a:hover {
 }
 
 .pv-mini-invoice-card:hover {
-    border-color: var(--gold-muted);
+    border-color: var(--silver-muted);
 }
 
 .pv-mini-invoice-id {
     font-weight: 700;
-    color: var(--gold);
+    color: var(--silver);
     font-size: 0.85rem;
 }
 
@@ -1044,8 +1060,8 @@ a:hover {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: var(--gold);
-    color: var(--text-on-gold);
+    background: var(--silver);
+    color: var(--text-on-silver);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1092,7 +1108,7 @@ a:hover {
 }
 
 .pv-catalog-card:hover {
-    border-color: var(--gold-muted);
+    border-color: var(--silver-muted);
 }
 
 .pv-catalog-card-image {
@@ -1117,7 +1133,7 @@ a:hover {
 
 .pv-catalog-card-code {
     font-size: 0.75rem;
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 700;
     margin-bottom: 2px;
 }
@@ -1140,7 +1156,7 @@ a:hover {
 .pv-catalog-card-price {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--silver);
     margin-bottom: 10px;
 }
 
@@ -1198,8 +1214,8 @@ a:hover {
 }
 
 .pv-cart-count {
-    background: var(--gold);
-    color: var(--text-on-gold);
+    background: var(--silver);
+    color: var(--text-on-silver);
     font-size: 0.7rem;
     padding: 2px 8px;
     border-radius: 10px;
@@ -1277,7 +1293,7 @@ a:hover {
 
 .pv-cart-item-code {
     font-size: 0.7rem;
-    color: var(--gold);
+    color: var(--silver);
     font-weight: 700;
 }
 
@@ -1316,7 +1332,7 @@ a:hover {
 }
 
 .pv-cart-item-qty button:hover {
-    border-color: var(--gold);
+    border-color: var(--silver);
 }
 
 .pv-cart-item-qty input {
@@ -1332,7 +1348,7 @@ a:hover {
 
 .pv-cart-item-qty input:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--silver);
 }
 
 .pv-cart-item-price-input {
@@ -1342,14 +1358,14 @@ a:hover {
     background: var(--bg-surface);
     border: 1px solid var(--border-default);
     border-radius: 4px;
-    color: var(--gold);
+    color: var(--silver);
     font-size: 0.8rem;
     font-weight: 600;
 }
 
 .pv-cart-item-price-input:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--silver);
 }
 
 .pv-cart-item-actions {
@@ -1380,7 +1396,7 @@ a:hover {
 
 .pv-cart-footer {
     padding: 16px 20px;
-    border-top: 2px solid var(--gold-muted);
+    border-top: 2px solid var(--silver-muted);
     background: var(--bg-input);
 }
 
@@ -1412,7 +1428,7 @@ a:hover {
 
 .pv-cart-tax-input:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--silver);
 }
 
 .pv-cart-grand-total {
@@ -1420,7 +1436,7 @@ a:hover {
     justify-content: space-between;
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--silver);
     padding-top: 8px;
     border-top: 1px solid var(--border-subtle);
     margin-bottom: 12px;
@@ -1448,22 +1464,22 @@ a:hover {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: var(--gold);
-    color: var(--text-on-gold);
+    background: var(--silver);
+    color: var(--text-on-silver);
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.3rem;
-    box-shadow: 0 4px 16px rgba(212,175,55,0.4);
+    box-shadow: 0 4px 16px rgba(192,192,192,0.4);
     transition: var(--transition);
     position: relative;
 }
 
 .pv-floating-cart-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 24px rgba(212,175,55,0.5);
+    box-shadow: 0 6px 24px rgba(192,192,192,0.5);
 }
 
 .pv-floating-cart-badge {
@@ -1497,7 +1513,7 @@ a:hover {
     align-items: flex-start;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 3px solid #d4af37;
+    border-bottom: 3px solid #c0c0c0;
 }
 
 .pv-quotation-viewer-company {
@@ -1509,7 +1525,7 @@ a:hover {
 .pv-quotation-viewer-logo {
     width: 60px;
     height: 60px;
-    background: #d4af37;
+    background: #c0c0c0;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -1790,9 +1806,9 @@ a:hover {
 }
 
 .pv-step-indicator .step-circle.active {
-    border-color: var(--gold);
-    background: var(--gold);
-    color: var(--text-on-gold);
+    border-color: var(--silver);
+    background: var(--silver);
+    color: var(--text-on-silver);
 }
 
 .pv-step-indicator .step-circle.done {
@@ -1808,7 +1824,7 @@ a:hover {
 }
 
 .pv-step-indicator.active .step-label {
-    color: var(--gold);
+    color: var(--silver);
 }
 
 .pv-step-connector {
@@ -1949,7 +1965,7 @@ a:hover {
     align-items: flex-start;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 3px solid #d4af37;
+    border-bottom: 3px solid #c0c0c0;
 }
 
 .pv-invoice-viewer-company {
@@ -2164,7 +2180,7 @@ a:hover {
 
 .pv-payment-table .col-receipt {
     font-weight: 700;
-    color: #d4af37;
+    color: #c0c0c0;
 }
 
 .pv-payment-table .col-amount {
@@ -2181,7 +2197,7 @@ a:hover {
     font-family: 'Segoe UI', system-ui, sans-serif;
     max-width: 600px;
     margin: 0 auto;
-    border: 2px solid #d4af37;
+    border: 2px solid #c0c0c0;
     border-radius: 12px;
 }
 
@@ -2191,7 +2207,7 @@ a:hover {
     gap: 16px;
     margin-bottom: 24px;
     padding-bottom: 16px;
-    border-bottom: 2px solid #d4af37;
+    border-bottom: 2px solid #c0c0c0;
 }
 
 .pv-receipt-header .doc-logo {
@@ -2219,7 +2235,7 @@ a:hover {
     text-align: center;
     font-size: 1.8rem;
     font-weight: 700;
-    color: #d4af37;
+    color: #c0c0c0;
     margin: 20px 0;
     letter-spacing: 3px;
 }
@@ -2260,7 +2276,7 @@ a:hover {
     text-align: center;
     padding: 30px;
     background: #f8f8f8;
-    border: 2px solid #d4af37;
+    border: 2px solid #c0c0c0;
     border-radius: 8px;
     margin: 20px 0;
 }
@@ -2304,7 +2320,7 @@ a:hover {
 .pv-receipt-thanks {
     text-align: center;
     font-size: 1.1rem;
-    color: #d4af37;
+    color: #c0c0c0;
     font-weight: 600;
     margin: 30px 0 20px;
 }
@@ -2356,7 +2372,7 @@ a:hover {
 }
 
 .pv-invoice-catalog-card:hover {
-    border-color: #d4af37;
+    border-color: #c0c0c0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
@@ -2382,7 +2398,7 @@ a:hover {
 
 .pv-invoice-catalog-code {
     font-size: 0.7rem;
-    color: #b8932a;
+    color: var(--silver);
     font-weight: 700;
     margin-bottom: 2px;
 }
@@ -2433,8 +2449,8 @@ a:hover {
 }
 
 .pv-invoice-item-qty button:hover {
-    border-color: #d4af37;
-    background: #fff8e1;
+    border-color: #c0c0c0;
+    background: #f0f0f0;
 }
 
 .pv-invoice-item-qty input {
@@ -2450,7 +2466,7 @@ a:hover {
 
 .pv-invoice-item-qty input:focus {
     outline: none;
-    border-color: #d4af37;
+    border-color: #c0c0c0;
 }
 
 .pv-invoice-price-input {
@@ -2467,7 +2483,7 @@ a:hover {
 
 .pv-invoice-price-input:focus {
     outline: none;
-    border-color: #d4af37;
+    border-color: #c0c0c0;
 }
 
 /* ---------- Modal Size ---------- */

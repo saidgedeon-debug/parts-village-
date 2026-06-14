@@ -543,7 +543,7 @@ const PVAdmin = {
         if (tbody) {
             tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:60px 20px;color:#888;">' +
                 '<div style="font-size:3em;margin-bottom:16px;">&#128230;</div>' +
-                '<h3 style="color:var(--pv-gold);margin-bottom:8px;">Your Catalog is Empty</h3>' +
+                '<h3 style="color:var(--pv-silver);margin-bottom:8px;">Your Catalog is Empty</h3>' +
                 '<p>Start by adding your first part.</p>' +
                 '<div style="margin-top:20px;">' +
                 '<button onclick="PVAdmin.addNewItem()" class="btn-export" style="margin-right:12px;">+ Add First Part</button>' +

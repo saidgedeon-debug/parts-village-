@@ -11,10 +11,10 @@
     <!-- ==================== HEADER ==================== -->
     <header class="pv-header">
         <div class="pv-header-left">
-            <div class="pv-logo">
-                <span class="pv-logo-brand">PARTS VILLAGE</span>
-                <span class="pv-logo-subtitle">Clients, Quotations & Invoicing</span>
-            </div>
+            <a href="../index.html" class="pv-logo">
+                <img src="../images/logo-header.png" alt="Parts Village" class="pv-logo-full">
+                <img src="../images/logo-dark.png" alt="PV" class="pv-logo-compact">
+            </a>
             <a href="../index.html" class="pv-back-link">
                 <span>&#8592;</span> Back to Catalog
             </a>
@@ -47,7 +47,7 @@
     <div class="pv-tab-content active" id="tab-clients">
         <div class="pv-section-header">
             <h2 class="pv-section-title">Client Directory</h2>
-            <button class="pv-btn pv-btn-gold" onclick="app.openClientModal()">
+            <button class="pv-btn pv-btn-silver" onclick="app.openClientModal()">
                 <span>+</span> Add New Client
             </button>
         </div>
@@ -61,7 +61,7 @@
             <div class="pv-empty-state-icon">&#128100;</div>
             <div class="pv-empty-state-title">No Clients Yet</div>
             <div class="pv-empty-state-desc">Add your first client to start creating quotations.</div>
-            <button class="pv-btn pv-btn-gold" onclick="app.openClientModal()">Add New Client</button>
+            <button class="pv-btn pv-btn-silver" onclick="app.openClientModal()">Add New Client</button>
         </div>
     </div>
 
@@ -153,7 +153,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="padding:16px; border-top:2px solid var(--gold-muted); background:var(--bg-input);">
+                    <div style="padding:16px; border-top:2px solid var(--silver-muted); background:var(--bg-input);">
                         <div class="pv-cart-subtotal">
                             <span>Subtotal</span>
                             <span id="mini-cart-subtotal">$0.00</span>
@@ -167,7 +167,7 @@
                             <span id="mini-cart-total">$0.00</span>
                         </div>
                         <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
-                            <button class="pv-btn pv-btn-gold" id="btn-generate-quotation" onclick="app.createQuotation()" disabled>
+                            <button class="pv-btn pv-btn-silver" id="btn-generate-quotation" onclick="app.createQuotation()" disabled>
                                 &#128221; Generate Quotation
                             </button>
                             <button class="pv-btn pv-btn-outline pv-btn-sm" onclick="app.clearCart()">
@@ -219,7 +219,7 @@
             <div class="pv-empty-state-icon">&#128221;</div>
             <div class="pv-empty-state-title">No Quotations Yet</div>
             <div class="pv-empty-state-desc">Create your first quotation from the Create Quotation tab.</div>
-            <button class="pv-btn pv-btn-gold" onclick="app.switchTab('create-quotation')">Create Quotation</button>
+            <button class="pv-btn pv-btn-silver" onclick="app.switchTab('create-quotation')">Create Quotation</button>
         </div>
     </div>
 
@@ -240,7 +240,7 @@
                     <option value="Overdue">Overdue</option>
                     <option value="Cancelled">Cancelled</option>
                 </select>
-                <button class="pv-btn pv-btn-gold" onclick="app.openCreateInvoiceModal()">
+                <button class="pv-btn pv-btn-silver" onclick="app.openCreateInvoiceModal()">
                     <span>+</span> Create Invoice
                 </button>
             </div>
@@ -272,7 +272,7 @@
             <div class="pv-empty-state-icon">&#128179;</div>
             <div class="pv-empty-state-title">No Invoices Yet</div>
             <div class="pv-empty-state-desc">Create an invoice from a quotation or directly for a client.</div>
-            <button class="pv-btn pv-btn-gold" onclick="app.openCreateInvoiceModal()">Create Invoice</button>
+            <button class="pv-btn pv-btn-silver" onclick="app.openCreateInvoiceModal()">Create Invoice</button>
         </div>
     </div>
 
@@ -316,7 +316,7 @@
             </div>
             <div class="pv-modal-footer">
                 <button type="button" class="pv-btn pv-btn-outline" onclick="app.closeClientModal()">Cancel</button>
-                <button type="button" class="pv-btn pv-btn-gold" onclick="app.saveClient()">Save Client</button>
+                <button type="button" class="pv-btn pv-btn-silver" onclick="app.saveClient()">Save Client</button>
             </div>
         </div>
     </div>
@@ -333,7 +333,7 @@
             </div>
             <div class="pv-modal-footer">
                 <button type="button" class="pv-btn pv-btn-outline" onclick="app.closeClientDetailModal()">Close</button>
-                <button type="button" class="pv-btn pv-btn-gold" id="btn-create-quotation-for-client" onclick="app.startQuotationForClient()">Create Quotation</button>
+                <button type="button" class="pv-btn pv-btn-silver" id="btn-create-quotation-for-client" onclick="app.startQuotationForClient()">Create Quotation</button>
             </div>
         </div>
     </div>
@@ -406,7 +406,7 @@
             <div class="pv-modal-footer">
                 <button type="button" class="pv-btn pv-btn-outline" onclick="app.closeSettingsModal()">Cancel</button>
                 <button type="button" class="pv-btn pv-btn-danger pv-btn-sm" onclick="app.confirmResetAll()">Reset All Data</button>
-                <button type="button" class="pv-btn pv-btn-gold" onclick="app.saveSettings()">Save Settings</button>
+                <button type="button" class="pv-btn pv-btn-silver" onclick="app.saveSettings()">Save Settings</button>
             </div>
         </div>
     </div>
@@ -441,7 +441,7 @@
                 <span id="cart-panel-total">$0.00</span>
             </div>
             <div class="pv-cart-actions">
-                <button class="pv-btn pv-btn-gold" onclick="app.createQuotation()">
+                <button class="pv-btn pv-btn-silver" onclick="app.createQuotation()">
                     &#128221; Generate Quotation
                 </button>
                 <button class="pv-btn pv-btn-outline pv-btn-sm" onclick="app.clearCart()">
@@ -529,7 +529,7 @@
                 <!-- Receipt viewer rendered here -->
             </div>
             <div class="pv-quotation-actions no-print" id="receipt-viewer-actions">
-                <button class="pv-btn pv-btn-gold" onclick="app.printReceipt(app._viewingReceiptPaymentId)">&#128424; Print Receipt</button>
+                <button class="pv-btn pv-btn-silver" onclick="app.printReceipt(app._viewingReceiptPaymentId)">&#128424; Print Receipt</button>
                 <button class="pv-btn pv-btn-outline" onclick="app.closeReceiptViewer()">Close</button>
             </div>
         </div>
@@ -561,7 +561,7 @@
             </div>
             <div class="pv-modal-footer">
                 <button type="button" class="pv-btn pv-btn-outline" onclick="app.closeCreateInvoiceModal()">Cancel</button>
-                <button type="button" class="pv-btn pv-btn-gold" onclick="app.confirmCreateInvoice()">Create Invoice</button>
+                <button type="button" class="pv-btn pv-btn-silver" onclick="app.confirmCreateInvoice()">Create Invoice</button>
             </div>
         </div>
     </div>

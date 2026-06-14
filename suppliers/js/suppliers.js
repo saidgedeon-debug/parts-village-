@@ -486,7 +486,7 @@ const SuppliersApp = {
                                 </div>
                                 <div style="text-align:right;">
                                     <span class="pv-badge pv-badge-${iq.status.toLowerCase()}">${iq.status}</span>
-                                    <div style="font-size:0.85em; color:var(--gold); font-weight:600; margin-top:4px;">$${this.formatNumber(iq.total_cost)}</div>
+                                    <div style="font-size:0.85em; color:var(--silver); font-weight:600; margin-top:4px;">$${this.formatNumber(iq.total_cost)}</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -991,8 +991,8 @@ const SuppliersApp = {
         return `
             <div class="pv-inquiry-document" id="inquiry-document-${inquiry.id}">
                 <div class="pv-inquiry-doc-header">
-                    <img src="../images/logo.png" class="doc-logo" alt="Parts Village" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                    <div style="display:none; width:60px; height:60px; background:linear-gradient(135deg,#d4af37,#b8960c); border-radius:12px; align-items:center; justify-content:center; font-weight:800; color:#000; font-size:1.2em;">PV</div>
+                    <img src="../images/logo-wordmark-dark.png" class="doc-logo" alt="Parts Village" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div style="display:none; width:60px; height:60px; background:linear-gradient(135deg,#c0c0c0,#808080); border-radius:12px; align-items:center; justify-content:center; font-weight:800; color:#000; font-size:1.2em;">PV</div>
                     <div class="pv-inquiry-doc-type">
                         <h1>Supplier Inquiry</h1>
                         <div class="pv-inquiry-doc-meta">
@@ -1111,23 +1111,23 @@ const SuppliersApp = {
                 <style>
                     * { margin:0; padding:0; box-sizing:border-box; }
                     body { font-family:'Segoe UI',Arial,sans-serif; color:#1a1a1a; line-height:1.6; padding:40px; max-width:900px; margin:0 auto; }
-                    .header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:32px; padding-bottom:24px; border-bottom:3px solid #d4af37; }
+                    .header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:32px; padding-bottom:24px; border-bottom:3px solid #c0c0c0; }
                     .header-right { text-align:right; }
                     h1 { font-size:1.6em; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
                     .meta { font-size:0.85em; color:#555; }
-                    .meta strong { color:#d4af37; }
+                    .meta strong { color:#c0c0c0; }
                     .parties { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-bottom:32px; }
                     .party { padding:16px; background:#f9f9f9; border-radius:8px; }
                     .party-label { font-size:0.75em; text-transform:uppercase; letter-spacing:1px; color:#888; font-weight:700; margin-bottom:8px; }
                     .party-name { font-size:1.1em; font-weight:700; margin-bottom:4px; }
-                    .party-company { font-size:0.9em; color:#d4af37; font-weight:600; margin-bottom:8px; }
+                    .party-company { font-size:0.9em; color:#c0c0c0; font-weight:600; margin-bottom:8px; }
                     .party-detail { font-size:0.85em; color:#555; line-height:1.8; }
-                    .section-title { font-size:1em; font-weight:700; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid #d4af37; }
+                    .section-title { font-size:1em; font-weight:700; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid #c0c0c0; }
                     table { width:100%; border-collapse:collapse; margin-bottom:24px; font-size:0.9em; }
-                    th { background:#f5f5f5; padding:10px 12px; text-align:left; font-weight:700; font-size:0.8em; text-transform:uppercase; letter-spacing:0.5px; color:#555; border-bottom:2px solid #d4af37; }
+                    th { background:#f5f5f5; padding:10px 12px; text-align:left; font-weight:700; font-size:0.8em; text-transform:uppercase; letter-spacing:0.5px; color:#555; border-bottom:2px solid #c0c0c0; }
                     td { padding:10px 12px; border-bottom:1px solid #e8e8e8; vertical-align:top; }
                     .col-num { width:30px; text-align:center; }
-                    .col-code { font-family:'Courier New',monospace; font-weight:600; color:#d4af37; }
+                    .col-code { font-family:'Courier New',monospace; font-weight:600; color:#c0c0c0; }
                     .col-partno { font-family:'Courier New',monospace; font-size:0.9em; }
                     .col-qty { width:50px; text-align:center; font-weight:700; }
                     .col-price { width:100px; text-align:right; font-weight:600; }
@@ -1135,7 +1135,7 @@ const SuppliersApp = {
                     .summary { display:flex; justify-content:flex-end; margin-bottom:32px; }
                     .summary-box { background:#f9f9f9; border-radius:8px; padding:16px 24px; min-width:280px; }
                     .summary-row { display:flex; justify-content:space-between; padding:6px 0; font-size:0.9em; color:#555; }
-                    .summary-row.total { border-top:2px solid #d4af37; margin-top:8px; padding-top:10px; font-size:1.1em; font-weight:700; color:#1a1a1a; }
+                    .summary-row.total { border-top:2px solid #c0c0c0; margin-top:8px; padding-top:10px; font-size:1.1em; font-weight:700; color:#1a1a1a; }
                     .notes-section { background:#f9f9f9; border-radius:8px; padding:20px; margin-bottom:24px; }
                     .notes-title { font-size:0.85em; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#888; margin-bottom:8px; }
                     .notes-content { font-size:0.9em; color:#555; line-height:1.7; white-space:pre-wrap; }
@@ -1147,7 +1147,7 @@ const SuppliersApp = {
             <body>
                 <div class="header">
                     <div>
-                        <img src="../images/logo.png" style="max-height:60px;" onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\\'width:60px;height:60px;background:linear-gradient(135deg,#d4af37,#b8960c);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#000;font-size:1.2em;\\'>PV</div>'">
+                        <img src="../images/logo-wordmark-dark.png" style="max-height:60px;" onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\\'width:60px;height:60px;background:linear-gradient(135deg,#c0c0c0,#808080);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#000;font-size:1.2em;\\'>PV</div>'">
                     </div>
                     <div class="header-right">
                         <h1>Supplier Inquiry</h1>
@@ -1357,7 +1357,7 @@ const SuppliersApp = {
                 </td>
                 <td>${this.formatDate(iq.created_at)}</td>
                 <td style="text-align:center;">${iq.total_items}</td>
-                <td style="text-align:right; font-weight:600; color:var(--gold);">$${this.formatNumber(iq.total_cost)}</td>
+                <td style="text-align:right; font-weight:600; color:var(--silver);">$${this.formatNumber(iq.total_cost)}</td>
                 <td><span class="pv-badge pv-badge-${iq.status.toLowerCase()}">${iq.status}</span></td>
                 <td>${iq.sent_via ? this.escapeHtml(iq.sent_via) : '<span style="color:var(--text-muted);">-</span>'}</td>
             </tr>

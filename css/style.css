@@ -8,9 +8,9 @@
     --pv-surface-elevated: #242424;
     --pv-border: #2a2a2a;
     --pv-border-light: #3a3a3a;
-    --pv-gold: #d4af37;
-    --pv-gold-light: #e8c547;
-    --pv-gold-dark: #b8960c;
+    --pv-silver: #c0c0c0;
+    --pv-silver-light: #d8d8d8;
+    --pv-silver-dark: #808080;
     --pv-text: #e0e0e0;
     --pv-text-secondary: #a0a0a0;
     --pv-text-muted: #666;
@@ -52,7 +52,7 @@ body {
 .pv-header {
     background: var(--pv-surface);
     border-bottom: 1px solid var(--pv-border);
-    padding: 16px 24px;
+    padding: 20px 32px;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -64,45 +64,47 @@ body {
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
+    gap: 28px;
+    flex-wrap: nowrap;
 }
 
 .pv-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
     text-decoration: none;
     color: inherit;
     flex-shrink: 0;
+    padding: 4px 0;
 }
 
-.pv-logo-icon {
-    width: 44px;
-    height: 44px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 1.1em;
-    color: #000;
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+.pv-logo-full {
+    height: 110px;
+    width: auto;
+    max-width: 420px;
+    flex-shrink: 0;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+    filter: brightness(1.1) contrast(1.05);
+    transition: filter 0.3s ease;
+}
+.pv-logo:hover .pv-logo-full {
+    filter: brightness(1.2) contrast(1.1);
 }
 
-.pv-logo-text {
-    font-size: 1.3em;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--pv-gold);
+.pv-logo-compact {
+    height: 48px;
+    width: 48px;
+    flex-shrink: 0;
+    object-fit: contain;
+    display: none;
+    filter: brightness(1.1) contrast(1.05);
 }
 
-.pv-logo-sub {
-    font-size: 0.75em;
-    color: var(--pv-text-muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
+@media (max-width: 768px) {
+    .pv-logo-full { display: none; }
+    .pv-logo-compact { display: block; }
+    .pv-header-inner { padding: 0 16px; gap: 12px; }
 }
 
 /* Search */
@@ -125,8 +127,8 @@ body {
 
 .pv-search-input:focus {
     outline: none;
-    border-color: var(--pv-gold);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    border-color: var(--pv-silver);
+    box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.15);
 }
 
 .pv-search-input::placeholder { color: var(--pv-text-muted); }
@@ -164,7 +166,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     text-decoration: none;
     padding: 10px 18px;
@@ -176,7 +178,7 @@ body {
 }
 .pv-suppliers-link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 4px 12px rgba(192, 192, 192, 0.3);
 }
 .pv-suppliers-icon { font-size: 1.1em; }
 @media (max-width: 768px) {
@@ -189,7 +191,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     text-decoration: none;
     padding: 10px 18px;
@@ -201,7 +203,7 @@ body {
 }
 .pv-clients-link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 4px 12px rgba(192, 192, 192, 0.3);
 }
 .pv-clients-icon { font-size: 1.1em; }
 @media (max-width: 768px) {
@@ -231,7 +233,7 @@ body {
     min-width: 160px;
 }
 
-.pv-filter-select:focus { outline: none; border-color: var(--pv-gold); }
+.pv-filter-select:focus { outline: none; border-color: var(--pv-silver); }
 
 /* Catalog Grid */
 .pv-catalog {
@@ -257,7 +259,7 @@ body {
 .pv-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--pv-shadow);
-    border-color: var(--pv-gold);
+    border-color: var(--pv-silver);
 }
 
 .pv-card-favorite {
@@ -280,7 +282,7 @@ body {
 }
 
 .pv-card-favorite:hover { background: rgba(0,0,0,0.8); transform: scale(1.1); }
-.pv-card-favorite.active { color: var(--pv-gold); }
+.pv-card-favorite.active { color: var(--pv-silver); }
 
 .pv-card-status-badge {
     position: absolute;
@@ -311,8 +313,8 @@ body {
     font-family: 'Courier New', monospace;
     font-size: 0.85em;
     font-weight: 700;
-    color: var(--pv-gold);
-    background: rgba(212, 175, 55, 0.1);
+    color: var(--pv-silver);
+    background: rgba(192, 192, 192, 0.1);
     padding: 4px 10px;
     border-radius: 6px;
 }
@@ -356,7 +358,7 @@ body {
 .pv-card-part-number {
     font-family: 'Courier New', monospace;
     font-size: 0.85em;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     margin-bottom: 4px;
     font-weight: 600;
 }
@@ -395,7 +397,7 @@ body {
 
 .pv-card-machines-more {
     font-size: 0.8em;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     margin-top: 4px;
 }
 
@@ -416,7 +418,7 @@ body {
 .pv-card-verified.pending { color: var(--pv-warning); }
 
 .pv-card-view-btn {
-    background: var(--pv-gold);
+    background: var(--pv-silver);
     color: #000;
     border: none;
     padding: 8px 16px;
@@ -427,7 +429,7 @@ body {
     transition: var(--pv-transition);
 }
 
-.pv-card-view-btn:hover { background: var(--pv-gold-light); transform: translateX(2px); }
+.pv-card-view-btn:hover { background: var(--pv-silver-light); transform: translateX(2px); }
 
 /* Modal */
 .pv-modal-overlay {
@@ -489,7 +491,7 @@ body {
     font-family: 'Courier New', monospace;
     font-size: 1.2em;
     font-weight: 700;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     margin-bottom: 4px;
 }
 
@@ -515,8 +517,8 @@ body {
     border: none;
 }
 
-.pv-modal-btn-primary { background: var(--pv-gold); color: #000; }
-.pv-modal-btn-primary:hover { background: var(--pv-gold-light); }
+.pv-modal-btn-primary { background: var(--pv-silver); color: #000; }
+.pv-modal-btn-primary:hover { background: var(--pv-silver-light); }
 
 .pv-modal-btn-secondary { background: var(--pv-surface-elevated); color: var(--pv-text); border: 1px solid var(--pv-border); }
 .pv-modal-btn-secondary:hover { background: var(--pv-border); }
@@ -566,7 +568,7 @@ body {
 
 .pv-info-block-title {
     font-size: 0.8em;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 10px;
@@ -584,8 +586,8 @@ body {
 
 .pv-machine-tag {
     display: inline-block;
-    background: rgba(212, 175, 55, 0.15);
-    color: var(--pv-gold);
+    background: rgba(192, 192, 192, 0.15);
+    color: var(--pv-silver);
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.8em;
@@ -642,7 +644,7 @@ body {
     color: var(--pv-text-muted);
 }
 .pv-empty-icon { font-size: 4em; margin-bottom: 20px; }
-.pv-empty-state h2 { font-size: 1.5em; margin-bottom: 12px; color: var(--pv-gold); }
+.pv-empty-state h2 { font-size: 1.5em; margin-bottom: 12px; color: var(--pv-silver); }
 .pv-empty-state p { font-size: 1.05em; margin-bottom: 24px; color: var(--pv-text-secondary); }
 .pv-empty-actions { margin-bottom: 32px; }
 .pv-empty-btn {
@@ -656,10 +658,10 @@ body {
     transition: var(--pv-transition);
 }
 .pv-empty-btn-primary {
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
 }
-.pv-empty-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,175,55,0.3); }
+.pv-empty-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(192,192,192,0.3); }
 .pv-empty-setup {
     background: var(--pv-surface-elevated);
     border: 1px solid var(--pv-border);
@@ -672,12 +674,12 @@ body {
     line-height: 1.8;
     color: var(--pv-text-secondary);
 }
-.pv-empty-setup strong { color: var(--pv-gold); }
+.pv-empty-setup strong { color: var(--pv-silver); }
 .pv-empty-setup code {
-    background: rgba(212,175,55,0.1);
+    background: rgba(192,192,192,0.1);
     padding: 2px 8px;
     border-radius: 4px;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     font-family: 'Courier New', monospace;
 }
 .pv-empty-setup a { color: var(--pv-info); }
@@ -702,7 +704,7 @@ body {
     border-radius: 50%;
     background: var(--pv-surface);
     border: 1px solid var(--pv-border);
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     font-size: 1.3em;
     cursor: pointer;
     box-shadow: var(--pv-shadow);
@@ -719,7 +721,7 @@ body {
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--pv-bg); }
 ::-webkit-scrollbar-thumb { background: var(--pv-border-light); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--pv-gold); }
+::-webkit-scrollbar-thumb:hover { background: var(--pv-silver); }
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -749,7 +751,7 @@ body {
     width: 48px;
     height: 48px;
     border: 3px solid var(--pv-border);
-    border-top-color: var(--pv-gold);
+    border-top-color: var(--pv-silver);
     border-radius: 50%;
     animation: pv-spin 0.8s linear infinite;
     margin-bottom: 20px;
@@ -867,12 +869,12 @@ body {
 }
 
 .pv-error-btn-primary {
-    background: var(--pv-gold);
+    background: var(--pv-silver);
     color: #000;
 }
 
 .pv-error-btn-primary:hover {
-    background: var(--pv-gold-light);
+    background: var(--pv-silver-light);
 }
 
 .pv-error-btn-secondary {
@@ -921,7 +923,7 @@ body {
 
 /* Retry button in status bar */
 .pv-status-retry {
-    background: var(--pv-gold);
+    background: var(--pv-silver);
     color: #000;
     border: none;
     padding: 2px 10px;
@@ -934,7 +936,7 @@ body {
 }
 
 .pv-status-retry:hover {
-    background: var(--pv-gold-light);
+    background: var(--pv-silver-light);
 }
 
 /* ============================================
@@ -978,7 +980,7 @@ body {
 
 .cost-modal-header h2 {
     font-size: 1.2em;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
 }
 
 .cost-modal-close {
@@ -1034,8 +1036,8 @@ body {
 
 .cost-field input:focus {
     outline: none;
-    border-color: var(--pv-gold);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    border-color: var(--pv-silver);
+    box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.15);
 }
 
 .cost-password-error {
@@ -1048,7 +1050,7 @@ body {
 .btn-cost-unlock {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     border: none;
     border-radius: 8px;
@@ -1058,13 +1060,13 @@ body {
     transition: var(--pv-transition);
 }
 
-.btn-cost-unlock:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+.btn-cost-unlock:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(192, 192, 192, 0.3); }
 
 /* Cost Data Display */
 .cost-data-item-title {
     font-size: 1.1em;
     font-weight: 700;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     margin-bottom: 16px;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--pv-border);
@@ -1091,7 +1093,7 @@ body {
     background: var(--pv-surface-elevated);
     padding: 10px 12px;
     text-align: left;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     font-weight: 600;
     font-size: 0.8em;
     text-transform: uppercase;
@@ -1105,7 +1107,7 @@ body {
     color: var(--pv-text-secondary);
 }
 
-.cost-data-table tr:hover { background: rgba(212, 175, 55, 0.03); }
+.cost-data-table tr:hover { background: rgba(192, 192, 192, 0.03); }
 
 .currency-usd { color: var(--pv-success); font-weight: 600; }
 .currency-rmb { color: #ff6b6b; font-weight: 600; }
@@ -1121,9 +1123,9 @@ body {
 
 /* Card cost button */
 .pv-card-cost-btn {
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    color: var(--pv-gold);
+    background: rgba(192, 192, 192, 0.15);
+    border: 1px solid rgba(192, 192, 192, 0.3);
+    color: var(--pv-silver);
     padding: 4px 10px;
     border-radius: 6px;
     font-size: 0.75em;
@@ -1134,16 +1136,16 @@ body {
 }
 
 .pv-card-cost-btn:hover {
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
 }
 
 /* Modal cost button */
 .pv-modal-btn-cost {
     padding: 10px 20px;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    color: var(--pv-gold);
+    background: rgba(192, 192, 192, 0.15);
+    border: 1px solid rgba(192, 192, 192, 0.4);
+    color: var(--pv-silver);
     border-radius: 8px;
     font-size: 0.85em;
     font-weight: 600;
@@ -1152,7 +1154,7 @@ body {
 }
 
 .pv-modal-btn-cost:hover {
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     border-color: transparent;
 }

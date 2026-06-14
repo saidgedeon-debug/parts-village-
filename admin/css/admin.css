@@ -9,9 +9,9 @@
     --pv-surface-elevated: #242424;
     --pv-border: #2a2a2a;
     --pv-border-light: #3a3a3a;
-    --pv-gold: #d4af37;
-    --pv-gold-light: #e8c547;
-    --pv-gold-dark: #b8960c;
+    --pv-silver: #c0c0c0;
+    --pv-silver-light: #d8d8d8;
+    --pv-silver-dark: #808080;
     --pv-text: #e0e0e0;
     --pv-text-secondary: #a0a0a0;
     --pv-text-muted: #666;
@@ -65,7 +65,7 @@ body {
 .login-logo-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     border-radius: 16px;
     display: flex;
     align-items: center;
@@ -79,7 +79,7 @@ body {
 .login-logo-text {
     font-size: 1.5em;
     font-weight: 700;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     letter-spacing: 2px;
 }
 
@@ -112,8 +112,8 @@ body {
 
 .login-field input:focus {
     outline: none;
-    border-color: var(--pv-gold);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    border-color: var(--pv-silver);
+    box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.15);
 }
 
 .login-error {
@@ -126,7 +126,7 @@ body {
 .login-btn {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     border: none;
     border-radius: 8px;
@@ -136,7 +136,7 @@ body {
     transition: var(--pv-transition);
 }
 
-.login-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+.login-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(192, 192, 192, 0.3); }
 
 .login-hint {
     text-align: center;
@@ -178,7 +178,7 @@ body {
 .admin-logo-icon {
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -190,7 +190,7 @@ body {
 .admin-logo-text {
     font-size: 1.1em;
     font-weight: 700;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
 }
 
 .admin-logo-sub {
@@ -221,8 +221,8 @@ body {
     border: none;
 }
 
-.btn-export { background: var(--pv-gold); color: #000; }
-.btn-export:hover { background: var(--pv-gold-light); }
+.btn-export { background: var(--pv-silver); color: #000; }
+.btn-export:hover { background: var(--pv-silver-light); }
 
 .btn-import { background: var(--pv-surface-elevated); color: var(--pv-text); border: 1px solid var(--pv-border); cursor: pointer; }
 .btn-import:hover { background: var(--pv-border); }
@@ -254,7 +254,7 @@ body {
 .admin-stat-number {
     font-size: 1.6em;
     font-weight: 700;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     line-height: 1;
 }
 
@@ -287,7 +287,7 @@ body {
 .admin-stats-bar .admin-stat-number {
     font-size: 1.8em;
     font-weight: 800;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     line-height: 1;
     margin-bottom: 4px;
 }
@@ -346,7 +346,7 @@ body {
     font-size: 0.95em;
 }
 
-.admin-search-input:focus { outline: none; border-color: var(--pv-gold); }
+.admin-search-input:focus { outline: none; border-color: var(--pv-silver); }
 
 .admin-filter-select {
     padding: 12px 16px;
@@ -384,7 +384,7 @@ body {
     text-align: left;
     font-size: 0.8em;
     font-weight: 600;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     text-transform: uppercase;
     letter-spacing: 1px;
     border-bottom: 1px solid var(--pv-border);
@@ -399,17 +399,17 @@ body {
     vertical-align: top;
 }
 
-.admin-table tr:hover { background: rgba(212, 175, 55, 0.03); }
+.admin-table tr:hover { background: rgba(192, 192, 192, 0.03); }
 
 .admin-table .item-code {
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     font-weight: 700;
     font-family: 'Courier New', monospace;
     cursor: pointer;
     transition: var(--pv-transition);
 }
 
-.admin-table .item-code:hover { color: var(--pv-gold-light); text-decoration: underline; }
+.admin-table .item-code:hover { color: var(--pv-silver-light); text-decoration: underline; }
 
 .admin-table .truncated {
     max-width: 200px;
@@ -425,8 +425,8 @@ body {
 }
 
 .machine-tag {
-    background: rgba(212, 175, 55, 0.15);
-    color: var(--pv-gold);
+    background: rgba(192, 192, 192, 0.15);
+    color: var(--pv-silver);
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 0.8em;
@@ -462,7 +462,7 @@ body {
     margin: 0 2px;
 }
 
-.btn-icon:hover { background: var(--pv-surface-elevated); color: var(--pv-gold); }
+.btn-icon:hover { background: var(--pv-surface-elevated); color: var(--pv-silver); }
 
 /* ============================================
    EDIT MODAL
@@ -505,7 +505,7 @@ body {
 
 .edit-modal-header h2 {
     font-size: 1.2em;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
 }
 
 .edit-modal-close {
@@ -562,8 +562,8 @@ body {
 .tab-btn:hover { color: var(--pv-text); }
 
 .tab-btn.active {
-    color: var(--pv-gold);
-    background: rgba(212, 175, 55, 0.1);
+    color: var(--pv-silver);
+    background: rgba(192, 192, 192, 0.1);
 }
 
 .tab-btn.active::after {
@@ -573,7 +573,7 @@ body {
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--pv-gold);
+    background: var(--pv-silver);
 }
 
 .tab-content { display: none; }
@@ -615,8 +615,8 @@ body {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--pv-gold);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    border-color: var(--pv-silver);
+    box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.15);
 }
 
 .form-group input:disabled,
@@ -670,9 +670,9 @@ body {
 .btn-remove:hover { background: rgba(244, 67, 54, 0.2); }
 
 .btn-add {
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px dashed var(--pv-gold);
-    color: var(--pv-gold);
+    background: rgba(192, 192, 192, 0.1);
+    border: 1px dashed var(--pv-silver);
+    color: var(--pv-silver);
     padding: 8px 16px;
     border-radius: 6px;
     cursor: pointer;
@@ -682,10 +682,10 @@ body {
     margin-top: 8px;
 }
 
-.btn-add:hover { background: rgba(212, 175, 55, 0.2); }
+.btn-add:hover { background: rgba(192, 192, 192, 0.2); }
 
 .btn-save {
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     border: none;
     padding: 12px 24px;
@@ -696,7 +696,7 @@ body {
     transition: var(--pv-transition);
 }
 
-.btn-save:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+.btn-save:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(192, 192, 192, 0.3); }
 
 .btn-save:disabled {
     opacity: 0.5;
@@ -776,8 +776,8 @@ body {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 2px solid rgba(212, 175, 55, 0.2);
-    border-top-color: var(--pv-gold);
+    border: 2px solid rgba(192, 192, 192, 0.2);
+    border-top-color: var(--pv-silver);
     border-radius: 50%;
     animation: spinner-rotate 0.8s linear infinite;
 }
@@ -802,7 +802,7 @@ body {
 .loading-overlay.hidden { display: none; }
 
 .loading-overlay-text {
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     font-size: 1em;
     font-weight: 600;
     letter-spacing: 1px;
@@ -848,8 +848,8 @@ body {
     width: 40px;
     height: 40px;
     margin: -20px 0 0 -20px;
-    border: 3px solid rgba(212, 175, 55, 0.2);
-    border-top-color: var(--pv-gold);
+    border: 3px solid rgba(192, 192, 192, 0.2);
+    border-top-color: var(--pv-silver);
     border-radius: 50%;
     animation: spinner-rotate 0.8s linear infinite;
 }
@@ -860,7 +860,7 @@ body {
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--pv-bg); }
 ::-webkit-scrollbar-thumb { background: var(--pv-border-light); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--pv-gold); }
+::-webkit-scrollbar-thumb:hover { background: var(--pv-silver); }
 
 /* ============================================
    RESPONSIVE
@@ -893,7 +893,7 @@ body {
     background: var(--pv-surface-elevated);
     color: var(--pv-text);
 }
-.btn-categories:hover { background: var(--pv-border); color: var(--pv-gold); }
+.btn-categories:hover { background: var(--pv-border); color: var(--pv-silver); }
 
 .btn-add-new {
     padding: 10px 20px;
@@ -930,7 +930,7 @@ body {
 .btn-link {
     background: none;
     border: none;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     font-size: 0.8em;
     cursor: pointer;
     text-decoration: underline;
@@ -938,14 +938,14 @@ body {
     margin-top: 4px;
     transition: var(--pv-transition);
 }
-.btn-link:hover { color: var(--pv-gold-light); }
+.btn-link:hover { color: var(--pv-silver-light); }
 
 /* ============================================
    MAIN IMAGE PREVIEW
    ============================================ */
 .main-image-preview {
     background: var(--pv-surface-elevated);
-    border: 2px solid var(--pv-gold);
+    border: 2px solid var(--pv-silver);
     border-radius: 12px;
     min-height: 200px;
     display: flex;
@@ -967,7 +967,7 @@ body {
     position: absolute;
     top: 12px;
     left: 12px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     padding: 6px 14px;
     border-radius: 6px;
@@ -1005,8 +1005,8 @@ body {
 }
 
 .gallery-item.is-main {
-    border-color: var(--pv-gold);
-    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+    border-color: var(--pv-silver);
+    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.3);
 }
 
 .gallery-item img {
@@ -1030,7 +1030,7 @@ body {
 .btn-set-main {
     flex: 1;
     padding: 6px 8px;
-    background: rgba(212, 175, 55, 0.9);
+    background: rgba(192, 192, 192, 0.9);
     color: #000;
     border: none;
     border-radius: 6px;
@@ -1039,12 +1039,12 @@ body {
     cursor: pointer;
     transition: var(--pv-transition);
 }
-.btn-set-main:hover { background: var(--pv-gold); }
+.btn-set-main:hover { background: var(--pv-silver); }
 
 .main-badge {
     flex: 1;
     padding: 6px 8px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     border-radius: 6px;
     font-size: 0.75em;
@@ -1134,7 +1134,7 @@ body {
     transition: var(--pv-transition);
 }
 
-.category-item:hover { border-color: var(--pv-gold); }
+.category-item:hover { border-color: var(--pv-silver); }
 
 .category-item-info {
     display: flex;
@@ -1183,8 +1183,8 @@ body {
    PRICING TAB
    ============================================ */
 .exchange-rate-bar {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.1), rgba(192, 192, 192, 0.05));
+    border: 1px solid rgba(192, 192, 192, 0.3);
     border-radius: 10px;
     padding: 12px 16px;
     margin-bottom: 20px;
@@ -1196,7 +1196,7 @@ body {
 }
 
 .exchange-rate-bar strong {
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     font-family: 'Courier New', monospace;
     font-size: 1.1em;
 }
@@ -1223,7 +1223,7 @@ body {
 
 .pricing-section-header h3 {
     font-size: 1em;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     margin: 0;
 }
 
@@ -1262,9 +1262,9 @@ body {
 }
 
 .pricing-row-grid input[readonly] {
-    background: rgba(212, 175, 55, 0.05);
-    border-color: rgba(212, 175, 55, 0.2);
-    color: var(--pv-gold);
+    background: rgba(192, 192, 192, 0.05);
+    border-color: rgba(192, 192, 192, 0.2);
+    color: var(--pv-silver);
     font-weight: 600;
     cursor: default;
 }
@@ -1319,7 +1319,7 @@ body {
 
 .cost-modal-header h2 {
     font-size: 1.2em;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
 }
 
 .cost-modal-close {
@@ -1375,8 +1375,8 @@ body {
 
 .cost-field input:focus {
     outline: none;
-    border-color: var(--pv-gold);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    border-color: var(--pv-silver);
+    box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.15);
 }
 
 .cost-password-error {
@@ -1389,7 +1389,7 @@ body {
 .btn-cost-unlock {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     border: none;
     border-radius: 8px;
@@ -1399,13 +1399,13 @@ body {
     transition: var(--pv-transition);
 }
 
-.btn-cost-unlock:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+.btn-cost-unlock:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(192, 192, 192, 0.3); }
 
 /* Cost Data Display */
 .cost-data-item-title {
     font-size: 1.1em;
     font-weight: 700;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     margin-bottom: 16px;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--pv-border);
@@ -1432,7 +1432,7 @@ body {
     background: var(--pv-surface-elevated);
     padding: 10px 12px;
     text-align: left;
-    color: var(--pv-gold);
+    color: var(--pv-silver);
     font-weight: 600;
     font-size: 0.8em;
     text-transform: uppercase;
@@ -1446,7 +1446,7 @@ body {
     color: var(--pv-text-secondary);
 }
 
-.cost-data-table tr:hover { background: rgba(212, 175, 55, 0.03); }
+.cost-data-table tr:hover { background: rgba(192, 192, 192, 0.03); }
 
 .currency-usd { color: var(--pv-success); font-weight: 600; }
 .currency-rmb { color: #ff6b6b; font-weight: 600; }
@@ -1462,9 +1462,9 @@ body {
 
 /* Card cost button */
 .pv-card-cost-btn {
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    color: var(--pv-gold);
+    background: rgba(192, 192, 192, 0.15);
+    border: 1px solid rgba(192, 192, 192, 0.3);
+    color: var(--pv-silver);
     padding: 4px 10px;
     border-radius: 6px;
     font-size: 0.75em;
@@ -1474,16 +1474,16 @@ body {
 }
 
 .pv-card-cost-btn:hover {
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
 }
 
 /* Modal cost button */
 .pv-modal-btn-cost {
     padding: 10px 20px;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    color: var(--pv-gold);
+    background: rgba(192, 192, 192, 0.15);
+    border: 1px solid rgba(192, 192, 192, 0.4);
+    color: var(--pv-silver);
     border-radius: 8px;
     font-size: 0.85em;
     font-weight: 600;
@@ -1492,7 +1492,7 @@ body {
 }
 
 .pv-modal-btn-cost:hover {
-    background: linear-gradient(135deg, var(--pv-gold), var(--pv-gold-dark));
+    background: linear-gradient(135deg, var(--pv-silver), var(--pv-silver-dark));
     color: #000;
     border-color: transparent;
 }
