@@ -1,419 +1,463 @@
-# Parts Village - Supabase + Vercel Deployment Guide
-# Step-by-Step (Complete Walkthrough)
+# Parts Village Digital Catalog - Deployment Guide
+
+Complete step-by-step guide to deploy the Parts Village Digital Catalog on Vercel with Supabase as the backend.
 
 ---
 
-## OVERVIEW
+## Table of Contents
 
-This guide walks you through connecting your Parts Village catalog to Supabase (database + storage) and deploying it on your own Vercel account. By the end, you'll have:
-
-- A live website URL on Vercel
-- A Supabase PostgreSQL database storing all your parts
-- Cloud image storage for product photos
-- Admin login with password protection
-
-**Estimated time: 15-20 minutes**
+1. [Prerequisites](#prerequisites)
+2. [Step 1: Create Supabase Project](#step-1-create-supabase-project)
+3. [Step 2: Apply Database Schema](#step-2-apply-database-schema)
+4. [Step 3: Insert Seed Data](#step-3-insert-seed-data)
+5. [Step 4: Set Up Storage](#step-4-set-up-storage)
+6. [Step 5: Configure Environment Variables](#step-5-configure-environment-variables)
+7. [Step 6: Create env.js for Frontend](#step-6-create-envjs-for-frontend)
+8. [Step 7: Deploy to Vercel](#step-7-deploy-to-vercel)
+9. [Step 8: Verify Deployment](#step-8-verify-deployment)
+10. [Database Helper Functions](#database-helper-functions)
+11. [Troubleshooting](#troubleshooting)
 
 ---
 
-## STEP 1: Create Your Supabase Account & Project
+## Prerequisites
 
-### 1.1 Sign up at Supabase
+- [Supabase account](https://supabase.com) (free tier works)
+- [Vercel account](https://vercel.com) (free tier works)
+- [Git](https://git-scm.com) installed locally
+- Catalog data files from this repository
 
-1. Go to **https://supabase.com**
-2. Click **"Start your project"** (green button)
-3. Sign up with **GitHub** (easiest) or email
-4. Verify your email if needed
+---
 
-### 1.2 Create a New Project
+## Step 1: Create Supabase Project
 
-1. In the Supabase dashboard, click **"New Project"**
-2. Fill in:
-   - **Organization**: Pick "Default Organization" (or create one)
-   - **Project Name**: `parts-village`
-   - **Database Password**: Choose a STRONG password and save it somewhere safe (you won't need it often, but don't lose it)
-   - **Region**: Pick the closest to you (e.g., `N. Virginia (us-east-1)` for US users)
-3. Click **"Create new project"**
-4. Wait 1-2 minutes for provisioning (you'll see a loading screen)
+1. Go to [https://app.supabase.com](https://app.supabase.com) and sign in
+2. Click **"New Project"**
+3. Fill in the details:
+   - **Organization**: Select or create your organization
+   - **Project Name**: `parts-village-catalog`
+   - **Database Password**: Set a strong password (save it securely)
+   - **Region**: Choose the closest region to your users
+4. Click **"Create new project"** and wait for provisioning (1-2 minutes)
 
-### 1.3 Copy Your API Credentials (IMPORTANT!)
-
-Once your project is ready:
+### Get Your API Credentials
 
 1. In the left sidebar, click **Project Settings** (gear icon at the bottom)
-2. Click **API** in the menu
-3. You'll see two key values. Copy and save them:
+2. Navigate to **API** in the settings menu
+3. Copy these values:
+   - **Project URL**: `https://xxxxxx.supabase.co` (this is `SUPABASE_URL`)
+   - **anon/public** key (this is `SUPABASE_ANON_KEY`)
+   - **service_role** key (for admin operations - keep secret!)
 
-```
-Project URL:     https://XXXXXXXXXXXXXX.supabase.co
-anon public key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
-
-**Save both values** - you'll paste them into the code in Step 4.
-
-> **Security note:** The `anon` key is safe to put in your frontend code. The `service_role` key should NEVER be exposed in the frontend - keep it secret.
+Save these somewhere safe - you'll need them in Steps 5 and 6.
 
 ---
 
-## STEP 2: Create the Database (Run SQL Schema)
+## Step 2: Apply Database Schema
 
-### 2.1 Open SQL Editor
+1. In your Supabase project dashboard, go to the **SQL Editor** in the left sidebar
+2. Click **"New query"**
+3. Open `sql/schema.sql` from this repository
+4. Copy the entire contents and paste into the SQL Editor
+5. Click **"Run"** to execute the schema
 
-1. In your Supabase project, click **"SQL Editor"** in the left sidebar
-2. Click **"New query"** (blue button)
+### What the schema creates:
+- `catalog_items` table with 50+ columns covering all catalog data
+- B-tree and GIN indexes for fast searching
+- Full-text search index for product names, part numbers, and brands
+- Row Level Security (RLS) policies
+- Auto-updating `updated_at` timestamp trigger
+- Helper functions for search, filtering, and statistics
 
-### 2.2 Create the Catalog Table
-
-1. Open the file `sql/schema.sql` from the project folder
-2. Copy ALL of its contents
-3. Paste into the SQL Editor
-4. Click **"Run"** (green play button)
-
-You should see "Success. No rows returned" in the output panel.
-
-### 2.3 Verify the Table Was Created
-
-In the SQL Editor, click **"New query"** and paste:
+### Verify the schema was applied:
 
 ```sql
-SELECT COUNT(*) FROM catalog_items;
-```
+-- Check table exists and has rows
+SELECT COUNT(*) FROM catalog_items;  -- Should return 0 (no data yet)
 
-Click **Run**. It should show `0` (the table is empty - that's correct).
+-- Check indexes
+SELECT indexname FROM pg_indexes WHERE tablename = 'catalog_items';
+
+-- Check RLS policies
+SELECT policyname, permissive, roles, cmd FROM pg_policies WHERE tablename = 'catalog_items';
+```
 
 ---
 
-## STEP 3: Set Up Image Storage
+## Step 3: Insert Seed Data
 
-Your product images will be stored in Supabase Storage (like cloud storage).
+1. In the SQL Editor, click **"New query"**
+2. Open `sql/seed_data.sql` from this repository
+3. Copy the entire contents and paste into the SQL Editor
+4. Click **"Run"** to insert the first 10 catalog items
 
-### 3.1 Create a Storage Bucket
+### Verify seed data:
 
-1. In the left sidebar, click **"Storage"**
+```sql
+-- List all seeded items
+SELECT item_code, product_name_en, brand, item_status
+FROM catalog_items
+ORDER BY item_code;
+
+-- Should show 10 items including A01-1 (Komatsu), A01-3 (Caterpillar), etc.
+```
+
+---
+
+## Step 4: Set Up Storage
+
+The app uses Supabase Storage for product images.
+
+### Create the "product-images" bucket:
+
+1. In the left sidebar, click **Storage**
 2. Click **"New bucket"**
 3. Fill in:
    - **Name**: `product-images`
-   - **Public bucket**: **CHECK THIS BOX** (images must be publicly viewable)
+   - **Public bucket**: **Checked** (images must be publicly accessible)
+   - **File size limit**: `5242880` (5MB recommended)
+   - **Allowed MIME types**: `image/png, image/jpeg, image/jpg, image/webp`
 4. Click **"Save"**
 
-### 3.2 Set Storage Policies
+### Set bucket policies (for uploads):
 
-1. Click on the `product-images` bucket you just created
-2. Click the **"Policies"** tab
-3. Click **"New Policy"** and add these three policies:
+1. Click on the `product-images` bucket
+2. Go to **Policies** tab
+3. Add these policies:
 
-**Policy 1 - Allow anyone to view images:**
+**SELECT policy** (public can view images):
 - Name: `Public can view images`
 - Allowed operation: `SELECT`
-- Target roles: `public, authenticated` (check both)
+- Target roles: `public, authenticated`
 - Policy definition: `true`
-- Click **Save**
 
-**Policy 2 - Allow authenticated users to upload:**
+**INSERT policy** (authenticated users can upload):
 - Name: `Authenticated users can upload`
 - Allowed operation: `INSERT`
-- Target roles: `authenticated` (check this)
+- Target roles: `authenticated`
 - Policy definition: `true`
-- Click **Save**
 
-**Policy 3 - Allow authenticated users to delete:**
+**DELETE policy** (authenticated users can delete):
 - Name: `Authenticated users can delete`
 - Allowed operation: `DELETE`
-- Target roles: `authenticated` (check this)
+- Target roles: `authenticated`
 - Policy definition: `true`
-- Click **Save**
 
 ---
 
-## STEP 4: Add Your Supabase Credentials to the Code
+## Step 5: Configure Environment Variables
 
-Now you need to paste your Supabase credentials into the HTML files so the app can connect.
+### For Vercel Deployment:
 
-### 4.1 Edit index.html (Main Catalog)
+1. In your Vercel dashboard, select your project
+2. Go to **Settings** > **Environment Variables**
+3. Add these variables:
 
-Open `index.html` in a text editor and find these lines (around line 119):
+| Variable Name | Value | Environment |
+|---------------|-------|-------------|
+| `SUPABASE_URL` | `https://your-project-ref.supabase.co` | Production |
+| `SUPABASE_ANON_KEY` | `your-anon-key-here` | Production |
+| `ADMIN_PASSWORD` | `your-secure-admin-password` | Production |
 
-```html
-<script>
-window.ENV = {
-    SUPABASE_URL: 'YOUR_SUPABASE_URL',
-    SUPABASE_ANON_KEY: 'YOUR_SUPABASE_ANON_KEY'
-};
-</script>
+4. Click **"Save"**
+
+### For Local Development:
+
+Create a `.env` file in the project root:
+
+```bash
+cp .env.example .env
 ```
 
-Replace with your actual values from Step 1.3:
+Edit `.env` and fill in your actual Supabase credentials:
 
-```html
-<script>
-window.ENV = {
-    SUPABASE_URL: 'https://XXXXXXXXXXXXXX.supabase.co',
-    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-};
-</script>
 ```
-
-### 4.2 Edit admin/index.html (Admin Panel)
-
-Open `admin/index.html` and find the same block (around line 251):
-
-```html
-<script>
-window.ENV = {
-    SUPABASE_URL: 'YOUR_SUPABASE_URL',
-    SUPABASE_ANON_KEY: 'YOUR_SUPABASE_ANON_KEY'
-};
-</script>
+SUPABASE_URL=https://your-project-ref.supabase.co
+SUPABASE_ANON_KEY=your-anon-key-here
+ADMIN_PASSWORD=your-secure-admin-password
 ```
-
-Replace with the SAME values:
-
-```html
-<script>
-window.ENV = {
-    SUPABASE_URL: 'https://XXXXXXXXXXXXXX.supabase.co',
-    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-};
-</script>
-```
-
-### 4.3 (Optional) Change Admin Password
-
-In `admin/index.html`, you can also set a custom admin password. Find:
-
-```html
-<script>
-window.ENV = {
-    SUPABASE_URL: '...',
-    SUPABASE_ANON_KEY: '...'
-    // You can add: ADMIN_PASSWORD: 'your-custom-password'
-};
-</script>
-```
-
-If you want a custom password, change it to:
-
-```html
-<script>
-window.ENV = {
-    SUPABASE_URL: 'https://XXXXXXXXXXXXXX.supabase.co',
-    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
-    ADMIN_PASSWORD: 'your-secure-password-here'
-};
-</script>
-```
-
-> If you don't set ADMIN_PASSWORD, the default is `admin123`.
 
 ---
 
-## STEP 5: Deploy to Vercel
+## Step 6: Create env.js for Frontend
 
-Now you'll put your site live on the internet using Vercel.
+The frontend app uses `window.ENV` for configuration since it's vanilla JavaScript (not a Node.js build). You need to expose the environment variables to the browser.
 
-### Option A: Deploy via Vercel Website (Easiest)
+### Option A: Static env.js (for local testing)
 
-#### 5.1 Push to GitHub (Recommended)
+Create `js/env.js`:
 
-1. Go to **https://github.com/new** and create a new repository
-   - Name: `parts-village-catalog`
-   - Make it **Private** (your code stays private)
-   - Click **Create repository**
-
-2. In your terminal/command prompt, navigate to the project folder:
-
-```bash
-cd /path/to/parts-village
+```javascript
+// js/env.js - Environment variables for the frontend
+// DO NOT commit this file with real credentials to version control!
+window.ENV = {
+  SUPABASE_URL: 'https://your-project-ref.supabase.co',
+  SUPABASE_ANON_KEY: 'your-anon-key-here',
+  ADMIN_PASSWORD: 'your-admin-password'
+};
 ```
 
-3. Initialize Git and push:
+Add to your `index.html` and `admin/index.html`:
+
+```html
+<script src="js/env.js"></script>
+```
+
+### Option B: Vercel Server-Side Injection (recommended for production)
+
+For Vercel, you can use a serverless function to inject env vars. See the Vercel Functions documentation.
+
+### Option C: Build-time script
+
+Use a simple build script that reads from `.env` and generates `env.js`:
 
 ```bash
-git init
-git add .
-git commit -m "Initial commit - Parts Village catalog"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/parts-village-catalog.git
-git push -u origin main
-n```
+# generate-env.sh
+#!/bin/bash
+echo "window.ENV = {" > js/env.js
+echo "  SUPABASE_URL: '${SUPABASE_URL}'," >> js/env.js
+echo "  SUPABASE_ANON_KEY: '${SUPABASE_ANON_KEY}'," >> js/env.js
+echo "  ADMIN_PASSWORD: '${ADMIN_PASSWORD}'" >> js/env.js
+echo "};" >> js/env.js
+```
 
-#### 5.2 Connect to Vercel
+---
 
-1. Go to **https://vercel.com** and sign up (use the same GitHub account)
-2. Click **"Add New Project"**
-3. Find and select your `parts-village-catalog` repository
-4. In the configuration:
-   - **Framework Preset**: Select `Other`
-   - **Root Directory**: `./` (leave as default)
-   - **Build Command**: Leave empty (it's a static HTML site)
-   - **Output Directory**: Leave empty
-5. Click **"Deploy"**
+## Step 7: Deploy to Vercel
 
-Wait about 1 minute. Vercel will give you a URL like:
-`https://parts-village-catalog.vercel.app`
+### Option A: Git-based deployment (recommended)
 
-### Option B: Deploy via Vercel CLI
+1. Push your project to GitHub/GitLab/Bitbucket
+2. In Vercel, click **"Add New Project"**
+3. Import your repository
+4. Configure:
+   - **Framework Preset**: `Other`
+   - **Root Directory**: `.` (or your project root)
+   - **Build Command**: (leave empty for static HTML)
+   - **Output Directory**: `.` (project root)
+5. Add the environment variables from Step 5
+6. Click **"Deploy"**
 
-If you have Node.js installed:
+### Option B: Vercel CLI
 
 ```bash
 # Install Vercel CLI
 npm i -g vercel
 
-# Login (opens browser)
+# Login
 vercel login
 
-# Deploy (run in project folder)
-cd /path/to/parts-village
+# Deploy
 vercel --prod
 ```
 
-Follow the prompts. It will ask you to confirm settings - just press Enter to accept defaults.
+### Configure `vercel.json` (optional)
 
-You'll get a live URL at the end.
+Create a `vercel.json` in your project root for SPA routing support:
 
----
-
-## STEP 6: Verify Everything Works
-
-### 6.1 Check the Main Catalog
-
-1. Open your Vercel URL: `https://your-project.vercel.app`
-2. The status bar at the top should show:
-   - `Database: Empty - Add your parts` (if no data yet) OR
-   - `Database: Supabase` (if you have data)
-   - `Mode: Standalone Mode` (working without Supabase) OR
-   - `Mode: Supabase Online` (connected to Supabase)
-
-### 6.2 Check the Admin Panel
-
-1. Go to `https://your-project.vercel.app/admin/index.html`
-2. Log in with your password (default: `admin123`)
-3. You should see the empty admin dashboard
-4. Click **"+ Add New"** to create a test part
-
-### 6.3 Test Adding a Part
-
-1. In the admin panel, click **"+ Add New"**
-2. Fill in some fields:
-   - OEM Part Number: `TEST-001`
-   - Product Name (EN): `Test Revolution Sensor`
-   - Brand: `Test Brand`
-   - Category: `Revolution Sensor`
-3. Click **"Save Changes"**
-4. The part should appear in the table
-5. Go back to the main catalog - you should see your new part!
+```json
+{
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/admin/.*", "dest": "/admin/index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ]
+}
+```
 
 ---
 
-## STEP 7: (Optional) Set Up Supabase Auth for Cloud Admin Login
+## Step 8: Verify Deployment
 
-If you want admin login to work through Supabase (instead of the local password), set up authentication:
+### Test the database connection:
 
-### 7.1 Enable Email Auth
+1. Open your deployed site URL
+2. Open browser DevTools (F12) > Console
+3. You should see:
+   ```
+   [Parts Village] Database client module loaded. Status: online
+   ```
 
-1. In Supabase, click **Authentication** in the left sidebar
-2. Click **Providers**
-3. Make sure **Email** is enabled (toggle should be ON)
-4. Set **Confirm email** to OFF (for easier testing)
-5. Click **Save**
+### Test catalog loading:
 
-### 7.2 Create an Admin User
+```javascript
+// In browser console:
+await PartsVillageDB.fetchItems();
+// Should return catalog data from Supabase
+```
 
-1. In Supabase, click **Authentication** > **Users**
-2. Click **"Add user"** (or **"Invite"**)
-3. Email: `admin@partsvillage.com`
-4. Password: Choose a strong password
-5. Click **"Create user"**
+### Test search:
 
-Now when you log into the admin panel, you can use:
-- **Email**: `admin@partsvillage.com`
-- **Password**: The one you just set
+```javascript
+// In browser console:
+await PartsVillageDB.fetchItems({ search: 'Komatsu' });
+// Should return Komatsu items
+```
 
-The app will automatically try Supabase Auth first, then fall back to the local password if Supabase isn't configured.
+### Verify Storage:
 
----
-
-## STEP 8: Upload Product Images
-
-### 8.1 Direct Upload (Admin Panel)
-
-1. Go to Admin Panel > Edit a part
-2. Click the **"Image"** tab
-3. Click **"Upload New Image"**
-4. Select an image from your computer
-5. The image uploads to Supabase Storage and the URL is saved automatically
-
-### 8.2 Bulk Upload (Supabase Dashboard)
-
-1. Go to Supabase > **Storage** > **product-images** bucket
-2. Click **"Upload files"**
-3. Select multiple images
-4. After upload, copy each image's public URL
-5. Paste the URLs into the `main_image` field for each part in the admin panel
-
-To get a public URL for an uploaded image:
-1. In the Storage bucket, click on the image
-2. Click the **"Get URL"** button
-3. Copy the URL
+1. Go to Supabase Dashboard > Storage
+2. Upload a test image to `product-images` bucket
+3. The image should be accessible via its public URL
 
 ---
 
-## TROUBLESHOOTING
+## Database Helper Functions
 
-### "Failed to connect to Supabase"
-- Check that you pasted the correct URL and key in BOTH `index.html` and `admin/index.html`
-- Make sure the URL starts with `https://` and ends with `.supabase.co`
-- Check browser console (F12) for specific error messages
+The schema includes several PostgreSQL helper functions:
 
-### "RLS policy violation" when saving
-- This means the Row Level Security is blocking writes
-- The app uses localStorage as fallback, so data still saves locally
-- To enable cloud saves, set up Supabase Auth (Step 7) and log in
+### `search_catalog_items(query TEXT)`
+Full-text search across item_code, product names, OEM numbers, brand, and category:
 
-### Admin password not working
-- Default password is `admin123`
-- If you set `ADMIN_PASSWORD` in the ENV block, use that instead
-- Check that there are no extra spaces in the password field
+```sql
+SELECT * FROM search_catalog_items('7861-93-2310');
+SELECT * FROM search_catalog_items('Komatsu');
+```
 
-### Images not showing
-- Make sure the `product-images` bucket is set to **Public**
-- Check Storage > Policies has a SELECT policy with `true` as the definition
-- In the admin panel, verify the `main_image` field has the correct URL
+### `search_by_machine(machine_query TEXT)`
+Search for items compatible with a specific machine:
 
-### CORS errors in browser console
+```sql
+SELECT * FROM search_by_machine('PC200-7');
+SELECT * FROM search_by_machine('E320D');
+```
+
+### `get_distinct_brands()`
+Get list of all brands with item counts:
+
+```sql
+SELECT * FROM get_distinct_brands();
+```
+
+### `get_distinct_categories()`
+Get list of all categories with item counts:
+
+```sql
+SELECT * FROM get_distinct_categories();
+```
+
+### `get_catalog_stats()`
+Get dashboard statistics as JSON:
+
+```sql
+SELECT get_catalog_stats();
+```
+
+### `append_change_history(...)`
+Programmatically log a change to an item:
+
+```sql
+SELECT append_change_history(
+  'A01-1',           -- item_code
+  'Updated',         -- action
+  'selling_price',   -- field
+  '',                -- old_value
+  '45.00',           -- new_value
+  'admin'            -- user
+);
+```
+
+---
+
+## Project File Structure
+
+```
+parts-village/
+|
+|-- index.html              # Main catalog page (public)
+|-- admin/
+|   -- index.html           # Admin panel (password protected)
+|-- css/
+|   -- style.css            # Main stylesheet
+|   -- admin.css            # Admin panel stylesheet
+|-- js/
+|   -- app.js               # Main catalog application
+|   -- admin.js             # Admin panel application
+|   -- supabase-client.js   # Supabase client + CRUD helpers (this file)
+|   -- env.js               # Environment variables (generated, don't commit!)
+|-- sql/
+|   -- schema.sql           # Database schema (run first)
+|   -- seed_data.sql        # Sample data (10 items, run second)
+|-- images/
+|   -- icon.svg             # App icon/PWA manifest icon
+|-- .env.example            # Environment variable template
+|-- README-DEPLOY.md        # This file
+```
+
+---
+
+## Troubleshooting
+
+### "Supabase credentials not configured" warning
+- Ensure `env.js` is loaded before `supabase-client.js` in your HTML
+- Check that `window.ENV.SUPABASE_URL` and `window.ENV.SUPABASE_ANON_KEY` are set correctly
+- Verify the Supabase project URL and anon key are correct
+
+### "Failed to initialize Supabase client" error
+- Check browser console for detailed error messages
+- Ensure the CDN script is loaded before `supabase-client.js`:
+  ```html
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/env.js"></script>
+  <script src="js/supabase-client.js"></script>
+  ```
+
+### RLS policy errors (INSERT/UPDATE/DELETE forbidden)
+- Supabase Auth is required for write operations
+- Enable anonymous sign-up in Authentication > Settings, or
+- Use the Service Role Key (server-side only, never expose to frontend)
+- For admin-only apps, consider using Edge Functions with service role
+
+### Images not loading from Storage
+- Ensure the `product-images` bucket is set to **Public**
+- Check Storage > Policies has a SELECT policy allowing public access
+- Verify the image file path matches what's stored in the `main_image` column
+
+### CORS errors
 - In Supabase, go to Project Settings > API > CORS
-- Add your Vercel domain to allowed origins (e.g., `https://parts-village.vercel.app`)
-- Also add `https://*.vercel.app` as a wildcard
+- Add your Vercel deployment domain to the allowed origins
+- For development, `http://localhost:*` should work by default
+
+### "relation does not exist" error
+- Run `sql/schema.sql` first before `sql/seed_data.sql`
+- Check that the schema was applied in the SQL Editor (no errors in output)
 
 ---
 
-## YOUR FILES (Quick Reference)
+## Next Steps
 
-| File | What to Edit | What to Put There |
-|------|-------------|-------------------|
-| `index.html` | `window.ENV.SUPABASE_URL` | Your Supabase project URL |
-| `index.html` | `window.ENV.SUPABASE_ANON_KEY` | Your Supabase anon key |
-| `admin/index.html` | `window.ENV.SUPABASE_URL` | Same Supabase project URL |
-| `admin/index.html` | `window.ENV.SUPABASE_ANON_KEY` | Same Supabase anon key |
-| `admin/index.html` | `window.ENV.ADMIN_PASSWORD` | (Optional) Custom admin password |
+1. **Import all 36 items**: The seed data only includes 10 items. Use the admin panel or bulk import to add the remaining items.
+2. **Set up authentication**: For a production app, configure Supabase Auth with email/password or OAuth providers.
+3. **Add Edge Functions**: For sensitive operations (bulk updates, exports), use Supabase Edge Functions with the service role key.
+4. **Configure backups**: Enable point-in-time recovery in Supabase for data safety.
+5. **Set up monitoring**: Use Vercel Analytics and Supabase reports to monitor usage.
 
 ---
 
-## NEXT STEPS
+## Security Notes
 
-Once your app is live:
-
-1. **Add your parts** via the admin panel (+ Add New button)
-2. **Upload product images** (Image tab in edit modal)
-3. **Import existing data** if you have a JSON/CSV file
-4. **Customize the branding** - edit the logo text and colors in CSS
-5. **Share the URL** with your team or customers
+- **Never commit `env.js`** with real credentials to version control
+- **Never expose the Service Role Key** to the frontend
+- Use Row Level Security (RLS) policies to restrict data access
+- Consider using Supabase Auth instead of the simple password check for production
+- Enable HTTPS only (enforced by Vercel and Supabase)
+- Regularly rotate your Supabase API keys
 
 ---
 
-## NEED HELP?
+## Support
 
 - **Supabase Docs**: https://supabase.com/docs
 - **Vercel Docs**: https://vercel.com/docs
-- **Supabase Status**: https://status.supabase.com (check if services are down)
+- **Supabase JS Client**: https://supabase.com/docs/reference/javascript

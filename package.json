@@ -1,6 +1,16 @@
 {
-  "name": "parts-village-catalog",
-  "version": "3.0.0",
-  "description": "Parts Village - Heavy Equipment Spare Parts Digital Catalog",
-  "private": true
+  "name": "Parts Village - Digital Catalog",
+  "short_name": "PV Catalog",
+  "description": "Premium Heavy Equipment Spare Parts Digital Catalog",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#d4af37",
+  "icons": [
+    {
+      "src": "images/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
 }

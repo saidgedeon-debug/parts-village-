@@ -1,133 +1,15 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0a0a0a">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="description" content="Parts Village - Premium Heavy Equipment Spare Parts Digital Catalog">
-<title>Parts Village - Digital Catalog</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="images/icon.svg">
-</head>
-<body>
+# Parts Village Digital Catalog - Environment Variables
+# Copy this file to .env and fill in your actual Supabase credentials
+# For local development with Vercel: cp .env.example .env
 
-<!-- DEBUG STATUS BAR -->
-<div id="debug-status" style="position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a1a1a;border-bottom:2px solid #d4af37;padding:8px 16px;font-size:12px;font-family:monospace;color:#e0e0e0;display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
-    <span id="status-db">📁 Database: <span style="color:#ff9800">Loading...</span></span>
-    <span id="status-count">📦 Products: <span style="color:#ff9800">0</span></span>
-    <span id="status-images">🖼️ Images: <span style="color:#ff9800">Checking...</span></span>
-    <span id="status-search">🔍 Search: <span style="color:#ff9800">Waiting...</span></span>
-    <span id="status-mode">🌐 Mode: <span style="color:#ff9800">Unknown</span></span>
-    <button onclick="document.getElementById('debug-status').style.display='none'" style="margin-left:auto;background:#d4af37;color:#000;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:11px;font-weight:bold;">✕ Hide</button>
-</div> 
-<div style="height:42px;"></div> 
+# Your Supabase project URL (from Project Settings > API)
+SUPABASE_URL=https://your-project-ref.supabase.co
 
-<!-- HEADER -->
-<header class="pv-header">
-    <div class="pv-header-inner">
-        <a href="index.html" class="pv-logo">
-            <div class="pv-logo-icon">PV</div>
-            <div>
-                <div class="pv-logo-text">PARTS VILLAGE</div>
-                <div class="pv-logo-sub">Digital Catalog</div>
-            </div>
-        </a>
-        <div class="pv-search-container">
-            <span class="pv-search-icon">🔍</span>
-            <input type="text" id="search-input" class="pv-search-input" 
-                   placeholder="Search part number, code, name, machine model..." autocomplete="off">
-            <button class="pv-search-clear" id="search-clear">✕</button>
-        </div>
-    </div>
-</header>
+# Your Supabase anonymous/public key (from Project Settings > API > anon/public)
+SUPABASE_ANON_KEY=your-anon-key-here
 
-<!-- STATS BAR -->
-<div class="pv-stats">
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-total">0</div>
-        <div class="pv-stat-label">Total Parts</div>
-    </div>
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-complete">0</div>
-        <div class="pv-stat-label">Complete</div>
-    </div>
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-needs-image">0</div>
-        <div class="pv-stat-label">Needs Image</div>
-    </div>
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-needs-verification">0</div>
-        <div class="pv-stat-label">Needs Verify</div>
-    </div>
-    <div class="pv-stat">
-        <div class="pv-stat-number" id="stat-images">0</div>
-        <div class="pv-stat-label">With Images</div>
-    </div>
-</div>
+# Admin password for the admin panel (set a strong password)
+ADMIN_PASSWORD=your-secure-admin-password
 
-<!-- FILTERS -->
-<div class="pv-filters">
-    <select id="filter-brand" class="pv-filter-select">
-        <option value="all">All Brands</option>
-    </select>
-    <select id="filter-category" class="pv-filter-select">
-        <option value="all">All Categories</option>
-    </select>
-    <select id="filter-status" class="pv-filter-select">
-        <option value="all">All Status</option>
-        <option value="Complete">Complete</option>
-        <option value="Needs image">Needs Image</option>
-        <option value="Needs verification">Needs Verification</option>
-        <option value="Draft">Draft</option>
-    </select>
-    <select id="filter-machine-brand" class="pv-filter-select">
-        <option value="all">All Machine Brands</option>
-    </select>
-    <label style="display:flex;align-items:center;gap:8px;color:var(--pv-text-secondary);font-size:0.9em;cursor:pointer;">
-        <input type="checkbox" id="filter-favorites" style="width:20px;height:20px;cursor:pointer;">
-        ⭐ Favorites Only
-    </label>
-</div>
-
-<!-- CATALOG GRID -->
-<div class="pv-catalog" id="catalog-grid">
-    <!-- Items rendered by JS -->
-</div>
-
-<!-- PRODUCT DETAIL MODAL -->
-<div class="pv-modal-overlay" id="modal-overlay">
-    <div class="pv-modal" id="detail-modal">
-        <button class="pv-modal-close" id="modal-close">✕</button>
-        <div id="modal-content">
-            <!-- Modal content rendered by JS -->
-        </div>
-    </div>
-</div>
-
-<!-- THEME TOGGLE -->
-<button class="theme-toggle" id="theme-toggle" title="Toggle Light/Dark Mode">☀️</button>
-
-<!-- ADMIN LINK -->
-<div style="text-align: center; padding: 20px; opacity: 0.3;">
-    <a href="admin/index.html" style="color: var(--pv-text-muted); font-size: 0.8em; text-decoration: none;">🔒 Admin Backoffice</a>
-</div>
-
-<!-- Supabase Configuration -->
-<script>
-window.ENV = {
-    SUPABASE_URL: 'https://ljmvpmnwjvlxgjixsxxo.supabase.co',
-    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqbXZwbW53anZseGdqaXhzeHhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTE3NzgsImV4cCI6MjA5NjU4Nzc3OH0.ioUHZlEfoGEhke26ZHGTWFZkycffkml4mLWmKj5V3sI'
-};
-</script>
-
-<!-- Supabase Client Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-
-<!-- Application Scripts -->
-<script src="js/supabase-client-v3.js"></script>
-<script src="js/app-v3.js"></script>
-</body>
-</html>
+# Optional: Service Role Key (for admin operations - keep this secret!)
+# SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
